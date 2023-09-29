@@ -15,7 +15,7 @@ The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
 ### `Front page of App`
-[http://localhost:3000/home]
+[http://localhost:3000/home](http://localhost:3000/home)
 
 ### `npm test`
 
