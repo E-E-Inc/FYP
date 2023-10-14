@@ -1,9 +1,14 @@
-export const LoginPage = () => {
-    <div className="App">
-      <header className="App-header">
-<h1> Please Login or Sign Up</h1>
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-<button>Sign Up</button>
-      </header>
-    </div>
+const LoginPage = () => {
+  return (
+   <div>
+    hi, this is the login page
+
+    <Link to="/CapturePicturePage">Capture Picture</Link>
+     <Link to="/Dashboard">Calorie Dashboard</Link>
+   </div>
+  );
 }
+export default LoginPage;
