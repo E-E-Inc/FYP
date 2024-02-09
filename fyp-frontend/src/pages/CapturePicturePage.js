@@ -6,6 +6,8 @@ const CapturePicturePage = () => {
    <div>
     Please Capture a picture
     <CameraCapture></CameraCapture>
+
+    
     
    </div>
   );

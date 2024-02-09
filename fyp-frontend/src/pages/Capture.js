@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { saveAs } from "file-saver";
 
 function CameraCapture() {
   const webcamRef = useRef(null);
+  const [pictureCaptured, setPictureCaptured] = useState(false);
+  const [portionSize, setPortionSize] = useState(1);
 
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -11,9 +13,10 @@ function CameraCapture() {
       // Convert the base64 image data to a Blob
       const blob = dataURLtoBlob(imageSrc);
       // Send the screenshot to the server
-      uploadBlob(blob);
+      uploadBlob(blob, portionSize);
       // Save the Blob as a file
       // saveAs(blob, 'captured-image.png');
+      setPictureCaptured(true);
     }
   };
 
@@ -29,9 +32,10 @@ function CameraCapture() {
     return new Blob([ab], { type: mimeString });
   }
 
-  const uploadBlob = async (blob) => {
+  const uploadBlob = async (blob, portionSize) => {
     const formData = new FormData();
     formData.append("file", blob);
+    formData.append("portionSize", portionSize);
 
     try {
       const response = await fetch("http://localhost:5000/upload", {
@@ -55,6 +59,18 @@ function CameraCapture() {
     <div>
       <Webcam audio={false} ref={webcamRef} screenshotFormat="image/png" />
       <button onClick={capture}>Capture Photo</button>
+    
+    {pictureCaptured && <p>Picture captured!</p>}
+      <div>
+        <input
+          type="number"
+          value={portionSize}
+          onChange={(e) => setPortionSize(e.target.value)}
+          placeholder="Enter portion size"
+        />
+      </div>
+         
+         
     </div>
   );
 }
