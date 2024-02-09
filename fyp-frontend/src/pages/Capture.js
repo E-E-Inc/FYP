@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
-import { saveAs } from "file-saver";
+import axios from "axios";
 
 function CameraCapture() {
   const webcamRef = useRef(null);
@@ -13,7 +13,7 @@ function CameraCapture() {
       // Convert the base64 image data to a Blob
       const blob = dataURLtoBlob(imageSrc);
       // Send the screenshot to the server
-      uploadBlob(blob, portionSize);
+      uploadBlob(blob);
       // Save the Blob as a file
       // saveAs(blob, 'captured-image.png');
       setPictureCaptured(true);
@@ -32,15 +32,28 @@ function CameraCapture() {
     return new Blob([ab], { type: mimeString });
   }
 
-  const uploadBlob = async (blob, portionSize) => {
+  const sendPortionSize = () => {
+    axios
+      .post("http://localhost:5000/process", {
+        portionSize: portionSize,
+      })
+      .then(function (response) {
+        console.log(response);
+        setPictureCaptured(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const uploadBlob = async (blob) => {
     const formData = new FormData();
     formData.append("file", blob);
-    formData.append("portionSize", portionSize);
 
     try {
       const response = await fetch("http://localhost:5000/upload", {
         method: "POST",
-        body: formData, 
+        body: formData,
         // Don't set Content-Type here, let the browser do it
       });
 
@@ -59,18 +72,17 @@ function CameraCapture() {
     <div>
       <Webcam audio={false} ref={webcamRef} screenshotFormat="image/png" />
       <button onClick={capture}>Capture Photo</button>
-    
-    {pictureCaptured && <p>Picture captured!</p>}
-      <div>
-        <input
-          type="number"
-          value={portionSize}
-          onChange={(e) => setPortionSize(e.target.value)}
-          placeholder="Enter portion size"
-        />
-      </div>
-         
-         
+      {pictureCaptured && (
+        <div>
+          <input
+            type="number"
+            value={portionSize}
+            onChange={(e) => setPortionSize(e.target.value)}
+            placeholder="Enter portion size"
+          />
+          <button onClick={sendPortionSize}>Send Portion Size</button>
+        </div>
+      )}
     </div>
   );
 }
