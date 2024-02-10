@@ -1,14 +1,16 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-function Home() {
+const LoginPage = () => {
   return (
     <div>
-      <h1>Home Pages</h1>
-      <Link to="/Login">Login </Link>
-      <Link to="/SignUp">Sign Up</Link>
+      <Link to="/CapturePicturePage" className="send-button">
+        Capture Picture
+      </Link>
+      <Link to="/Dashboard" className="send-button">
+        Calorie Dashboard
+      </Link>
     </div>
   );
-}
-
-export default Home;
+};
+export default LoginPage;

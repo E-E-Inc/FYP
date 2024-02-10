@@ -1,26 +1,27 @@
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import axios from "axios";
+import Modal from "react-modal";
+import "./pages.css";
+
+Modal.setAppElement("#root"); // This line is needed for accessibility reasons
 
 function CameraCapture() {
   const webcamRef = useRef(null);
   const [pictureCaptured, setPictureCaptured] = useState(false);
   const [portionSize, setPortionSize] = useState(1);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
-      // Convert the base64 image data to a Blob
       const blob = dataURLtoBlob(imageSrc);
-      // Send the screenshot to the server
       uploadBlob(blob);
-      // Save the Blob as a file
-      // saveAs(blob, 'captured-image.png');
       setPictureCaptured(true);
+      openModal();
     }
   };
 
-  // Function to convert data URL to Blob
   function dataURLtoBlob(dataURL) {
     const byteString = atob(dataURL.split(",")[1]);
     const mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
@@ -40,6 +41,7 @@ function CameraCapture() {
       .then(function (response) {
         console.log(response);
         setPictureCaptured(false);
+        closeModal();
       })
       .catch(function (error) {
         console.log(error);
@@ -54,7 +56,6 @@ function CameraCapture() {
       const response = await fetch("http://localhost:5000/upload", {
         method: "POST",
         body: formData,
-        // Don't set Content-Type here, let the browser do it
       });
 
       if (response.ok) {
@@ -68,21 +69,60 @@ function CameraCapture() {
     }
   };
 
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
-    <div>
-      <Webcam audio={false} ref={webcamRef} screenshotFormat="image/png" />
-      <button onClick={capture}>Capture Photo</button>
-      {pictureCaptured && (
-        <div>
-          <input
-            type="number"
-            value={portionSize}
-            onChange={(e) => setPortionSize(e.target.value)}
-            placeholder="Enter portion size"
-          />
-          <button onClick={sendPortionSize}>Send Portion Size</button>
-        </div>
-      )}
+    <div className="camera-capture">
+      <h1 class="my-heading"> Capture your food</h1>
+      <Webcam
+        audio={false}
+        ref={webcamRef}
+        screenshotFormat="image/png"
+        className="webcam"
+      />
+      <br />
+      <button onClick={capture} className="capture-button">
+        Capture Photo
+      </button>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Portion Size Input"
+        style={{
+          overlay: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            position: "relative",
+            top: "auto",
+            left: "auto",
+            right: "auto",
+            bottom: "auto",
+            borderRadius: "10px",
+          },
+        }}
+      >
+        <h2>Enter Portion Size</h2>
+        <input
+          type="number"
+          value={portionSize}
+          onChange={(e) => setPortionSize(e.target.value)}
+          placeholder="Enter portion size"
+          className="portion-size-input"
+        />
+        <button onClick={sendPortionSize} className="send-button">
+          Send Portion Size
+        </button>
+      </Modal>
     </div>
   );
 }

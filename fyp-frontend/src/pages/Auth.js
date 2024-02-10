@@ -1,0 +1,43 @@
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+
+const AuthPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  return (
+    <div style={{ color: "black" }}>
+      <form>
+        <label className="authentication-label">
+          Username
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="authentication-input"
+          />
+        </label>
+        <br />
+        <label className="authentication-label">
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="authentication-input"
+          />
+        </label>
+        <br />
+        <br />
+        <Link to="/Home" className="send-button">
+          Login
+        </Link>
+        <Link to="/Home" className="send-button">
+          Sign Up
+        </Link>
+      </form>
+    </div>
+  );
+};
+export default AuthPage;
