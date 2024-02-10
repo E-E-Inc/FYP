@@ -32,7 +32,7 @@
   border-radius: 12px;
 }
 
-.authentication-input {
+.page-input {
   width: 100px;
   height: 40px;
   font-size: 12px;
@@ -45,7 +45,20 @@
   border-radius: 12px;
 }
 
-.authentication-label {
+.page-label {
+  font-size: 12px;
+  padding: 2px 32px;
+  border-radius: 12px;
+}
+
+.page-label-bold {
+  font-size: 12px;
+  padding: 2px 32px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.Dashboard-Heading-label {
   font-size: 12px;
   padding: 2px 32px;
   border-radius: 12px;

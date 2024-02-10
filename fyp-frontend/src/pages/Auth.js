@@ -9,23 +9,23 @@ const AuthPage = () => {
   return (
     <div style={{ color: "black" }}>
       <form>
-        <label className="authentication-label">
+        <label className="page-label">
           Username
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="authentication-input"
+            className="page-input"
           />
         </label>
         <br />
-        <label className="authentication-label">
+        <label className="page-label">
           Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="authentication-input"
+            className="page-input"
           />
         </label>
         <br />
