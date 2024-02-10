@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import BackButton from "./backButton";
 
 const AuthPage = () => {
   const [username, setUsername] = useState("");
@@ -8,6 +9,7 @@ const AuthPage = () => {
 
   return (
     <div style={{ color: "black" }}>
+      <BackButton />
       <form>
         <label className="page-label">
           Username

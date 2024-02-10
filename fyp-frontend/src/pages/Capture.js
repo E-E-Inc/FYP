@@ -3,6 +3,7 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import Modal from "react-modal";
 import "./pages.css";
+import BackButton from "./backButton";
 
 Modal.setAppElement("#root"); // This line is needed for accessibility reasons
 
@@ -79,6 +80,7 @@ function CameraCapture() {
 
   return (
     <div className="camera-capture">
+      <BackButton />
       <h1 class="my-heading"> Capture your food</h1>
       <Webcam
         audio={false}
