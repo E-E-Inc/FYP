@@ -4,6 +4,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import "./pages.css";
 import BackButton from "./backButton";
+import { BiArrowBack } from "react-icons/bi";
 
 Modal.setAppElement("#root"); // This line is needed for accessibility reasons
 
@@ -12,6 +13,7 @@ function CameraCapture() {
   const [pictureCaptured, setPictureCaptured] = useState(false);
   const [portionSize, setPortionSize] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [CalsmodalIsOpen, setCalsModalIsOpen] = useState(false);
 
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -43,10 +45,15 @@ function CameraCapture() {
         console.log(response);
         setPictureCaptured(false);
         closeModal();
+        CalsopenModal();
       })
       .catch(function (error) {
         console.log(error);
       });
+  };
+
+  const goback = () => {
+    CalscloseModal();
   };
 
   const uploadBlob = async (blob) => {
@@ -78,20 +85,74 @@ function CameraCapture() {
     setModalIsOpen(false);
   };
 
+  const CalsopenModal = () => {
+    setCalsModalIsOpen(true);
+  };
+
+  const CalscloseModal = () => {
+    setCalsModalIsOpen(false);
+  };
   return (
-    <div className="camera-capture">
+    <div className="camera-capture-div">
       <BackButton />
-      <h1 class="my-heading"> Capture your food</h1>
-      <Webcam
-        audio={false}
-        ref={webcamRef}
-        screenshotFormat="image/png"
-        className="webcam"
-      />
-      <br />
-      <button onClick={capture} className="capture-button">
-        Capture Photo
-      </button>
+      <h1
+        style={{
+          display: "flex",
+          justifyContent: "left",
+          width: "89%",
+          color: "burlywood",
+        }}
+      >
+        Whats on your plate?
+      </h1>
+      <div style={{ display: "flex", justifyContent: "right", width: "90%" }}>
+        <Webcam
+          audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/png"
+          className="webcam"
+        />
+      </div>
+
+      <Modal
+        isOpen={CalsmodalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Portion Size Input"
+        style={{
+          overlay: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            position: "relative",
+            top: "auto",
+            left: "auto",
+            right: "auto",
+            bottom: "auto",
+            borderRadius: "10px",
+          },
+        }}
+      >
+        <button onClick={goback} className="back-button-model">
+          {" "}
+          <BiArrowBack />
+        </button>
+        <h1 className="my-heading"> Nutritional Information</h1>
+        <label className="page-label-bold">Food Identified</label>
+        <label className="page-label-bold">Calories</label>
+
+        <br />
+        <label className="page-label">Name</label>
+        <label className="page-label">000</label>
+        <br />
+      </Modal>
+
+      <div style={{ display: "flex", justifyContent: "left", width: "45%" }}>
+        <button onClick={capture} className="capture-button">
+          Capture Photo
+        </button>
+      </div>
 
       <Modal
         isOpen={modalIsOpen}

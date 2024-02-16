@@ -8,7 +8,7 @@
   border: none;
   color: black;
   padding: 15px 32px;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
   display: inline-block;
   font-size: 12px;
@@ -67,4 +67,60 @@
 .my-heading {
   color: burlywood;
   font-family: Arial, sans-serif;
+}
+
+.camera-capture-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Calories-Form {
+  color: black;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  width: 400px;
+  height: 300px;
+
+  font-size: 10px;
+  background-color: #d2b48c;
+}
+
+.my-modal {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  border-radius: 10px;
+}
+
+.my-modal-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-label {
+  font-size: 12px;
+  padding: 2px 32px;
+  border-radius: 12px;
+}
+
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+  font-size: 25px;
+}
+
+.back-button-model {
+  background: none;
+  border: none;
 }
