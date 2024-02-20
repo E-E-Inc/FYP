@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import BackButton from "./backButton";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
@@ -9,54 +8,47 @@ const Login = () => {
   const history = useHistory();
 
   const handleLogin = async (e) => {
-    console.log("Inside handleLogin");
     e.preventDefault();
     try {
-      console.log("inside try");
       // Send a POST request to your backend for login
       const response = await axios.post("http://localhost:5000/login", {
         email,
         password,
       });
-      console.log(response);
-      // Handle successful login (e.g., navigate to another page)
-      history.push("/Home");
-      console.log("here girl");
+      console.log("In handle login");
+      // Store the JWT token securely (e.g., in local storage)
+      localStorage.setItem("token", response.data.token);
+
+      // Redirect to the home page or any other route after successful login
+      history.push("/home");
     } catch (error) {
       console.error("Login failed:", error);
-      console.log("fail girl");
-
       // Handle login failure (e.g., display error message)
     }
   };
 
   return (
     <div style={{ color: "black" }}>
-      <BackButton />
       <form>
-        <label className="page-label">
+        <label>
           Email
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="page-input"
           />
         </label>
         <br />
-        <label className="page-label">
+        <label>
           Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="page-input"
           />
         </label>
-
-        <button onClick={handleLogin} className="send-button">
-          Login
-        </button>
+        <br />
+        <button onClick={handleLogin}>Login</button>
       </form>
     </div>
   );

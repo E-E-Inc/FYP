@@ -5,22 +5,29 @@ import Modal from "react-modal";
 import "./pages.css";
 import BackButton from "./backButton";
 import { BiArrowBack } from "react-icons/bi";
+import FadeLoader from "react-spinners/FadeLoader";
 
 Modal.setAppElement("#root"); // This line is needed for accessibility reasons
 
 function CameraCapture() {
   const webcamRef = useRef(null);
+
+  // Handles state
   const [pictureCaptured, setPictureCaptured] = useState(false);
   const [portionSize, setPortionSize] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [CalsmodalIsOpen, setCalsModalIsOpen] = useState(false);
   const [foodData, setFoodData] = useState(null);
+  const [overallCalories, setOverallCalories] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
       const blob = dataURLtoBlob(imageSrc);
       uploadBlob(blob);
+
+      // Sets that a picture is captured and opens the Modal
       setPictureCaptured(true);
       openModal();
     }
@@ -38,41 +45,37 @@ function CameraCapture() {
   }
 
   const sendPortionSize = () => {
+    setLoading(true);
     axios
       .post("http://localhost:5000/process", {
         portionSize: portionSize,
       })
       .then(function (response) {
         console.log(response);
+        //setLoading(true);
+        // Sets the food data and overall calories
+        setFoodData(response.data.result);
+        setOverallCalories(response.data.overall_calories);
+
+        //reset picture captured to false
         setPictureCaptured(false);
+
+        //Close User input for calories modal
         closeModal();
+        //Open modal for displaying calories
         CalsopenModal();
       })
       .catch(function (error) {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false regardless of success or failure
       });
   };
 
+  // Method for closing modal
   const goback = () => {
     CalscloseModal();
-  };
-
-  const fetchData = () => {
-    // Make a GET request to your endpoint
-    fetch("http://localhost:5000/getFoodData")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Network response was not ok.");
-      })
-      .then((data) => {
-        // Handle the response data
-        setFoodData(data);
-      })
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
   };
 
   const uploadBlob = async (blob) => {
@@ -96,18 +99,22 @@ function CameraCapture() {
     }
   };
 
+  // Method for opening modal for user input
   const openModal = () => {
     setModalIsOpen(true);
   };
 
+  // Method for closing modal for user input
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
+  // Method for opening modal for displaying calories
   const CalsopenModal = () => {
     setCalsModalIsOpen(true);
   };
 
+  // Method for closing modal for displaying calories
   const CalscloseModal = () => {
     setCalsModalIsOpen(false);
   };
@@ -158,19 +165,9 @@ function CameraCapture() {
           <BiArrowBack />
         </button>
         <h1 className="my-heading"> Nutritional Information</h1>
-        <label className="page-label-bold">Food Identified</label>
-        <label className="page-label-bold">Calories</label>
-
-        {foodData ? (
-          <div>
-            {/* Render your food data here */}
-            <p>Status: {foodData.status}</p>
-            <p>Message: {foodData.message}</p>
-            {/* You can render other properties of foodData as needed */}
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
+        {/* Display Food Name and Overall Calories */}
+        <h2>Food Name: {foodData}</h2>
+        <h2>Overall Calories: {overallCalories}</h2>
       </Modal>
 
       <div style={{ display: "flex", justifyContent: "left", width: "45%" }}>
@@ -199,17 +196,36 @@ function CameraCapture() {
           },
         }}
       >
-        <h2>Enter Portion Size</h2>
-        <input
-          type="number"
-          value={portionSize}
-          onChange={(e) => setPortionSize(e.target.value)}
-          placeholder="Enter portion size"
-          className="portion-size-input"
-        />
-        <button onClick={sendPortionSize} className="send-button">
-          Send Portion Size
-        </button>
+        {loading ? (
+          <div style={{ textAlign: "center" }}>
+            <FadeLoader />
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <h2>Enter Portion Size</h2>
+            <input
+              type="number"
+              value={portionSize}
+              onChange={(e) => setPortionSize(e.target.value)}
+              placeholder="Enter portion size"
+              className="portion-size-input"
+              style={{ marginBottom: "10px" }}
+            />
+            <button
+              onClick={sendPortionSize}
+              className="send-button"
+              style={{ display: loading ? "none" : "block" }}
+            >
+              Send Portion Size
+            </button>
+          </div>
+        )}
       </Modal>
     </div>
   );
