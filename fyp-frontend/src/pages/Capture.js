@@ -14,6 +14,7 @@ function CameraCapture() {
   const [portionSize, setPortionSize] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [CalsmodalIsOpen, setCalsModalIsOpen] = useState(false);
+  const [foodData, setFoodData] = useState(null);
 
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -54,6 +55,24 @@ function CameraCapture() {
 
   const goback = () => {
     CalscloseModal();
+  };
+
+  const fetchData = () => {
+    // Make a GET request to your endpoint
+    fetch("http://localhost:5000/getFoodData")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then((data) => {
+        // Handle the response data
+        setFoodData(data);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
   };
 
   const uploadBlob = async (blob) => {
@@ -142,10 +161,16 @@ function CameraCapture() {
         <label className="page-label-bold">Food Identified</label>
         <label className="page-label-bold">Calories</label>
 
-        <br />
-        <label className="page-label">Name</label>
-        <label className="page-label">000</label>
-        <br />
+        {foodData ? (
+          <div>
+            {/* Render your food data here */}
+            <p>Status: {foodData.status}</p>
+            <p>Message: {foodData.message}</p>
+            {/* You can render other properties of foodData as needed */}
+          </div>
+        ) : (
+          <p>Loading...</p>
+        )}
       </Modal>
 
       <div style={{ display: "flex", justifyContent: "left", width: "45%" }}>

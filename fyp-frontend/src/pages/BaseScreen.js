@@ -5,8 +5,11 @@ function Base() {
   return (
     <div>
       <h1 class="my-heading">Food Logix</h1>
-      <Link to="/Auth" className="send-button">
-        Get Started
+      <Link to="/SignUp" className="send-button">
+        Sign Up
+      </Link>
+      <Link to="/Login" className="send-button">
+        Login
       </Link>
     </div>
   );
