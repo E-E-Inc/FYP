@@ -15,10 +15,8 @@ const Login = () => {
         email,
         password,
       });
-      console.log("In handle login");
-      // Store the JWT token securely (e.g., in local storage)
-      localStorage.setItem("token", response.data.token);
-
+      console.log(response);
+      //console.log(response.data.message);
       // Redirect to the home page or any other route after successful login
       history.push("/home");
     } catch (error) {
