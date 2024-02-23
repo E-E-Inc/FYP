@@ -18,10 +18,10 @@ const SignUp = () => {
       });
       // Handle successful sign-up (e.g., display success message)
       console.log("here girl");
+      // Redirect to the login page
+      history.push("/Login");
     } catch (error) {
       console.error("Sign-up failed:", error);
-      console.log("fail");
-      // Handle sign-up failure (e.g., display error message)
     }
   };
 

@@ -2,6 +2,7 @@
   border-radius: 10px;
 }
 
+/* Buttons */
 .capture-button,
 .send-button {
   background-color: #fffdd0;
@@ -18,6 +19,26 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   transition-duration: 0.4s;
 }
+
+.back-button {
+  position: fixed;
+  top: 20px;
+  cursor: pointer;
+  left: 20px;
+  background: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+  font-size: 25px;
+}
+
+.clearButton {
+  background: none;
+  border: none; /* Optionally, remove borders if needed */
+  cursor: pointer; /* Ensure cursor changes to pointer on hover */
+}
+
+/* Input boxes */
 
 .portion-size-input {
   width: 50px;
@@ -45,29 +66,29 @@
   border-radius: 12px;
 }
 
+/* Labels and Headings */
+
 .page-label {
   font-size: 12px;
-  padding: 2px 32px;
-  border-radius: 12px;
 }
 
 .page-label-bold {
   font-size: 12px;
-  padding: 2px 32px;
-  border-radius: 12px;
-  font-weight: bold;
-}
-
-.Dashboard-Heading-label {
-  font-size: 12px;
-  padding: 2px 32px;
-  border-radius: 12px;
+  margin-left: 30px;
 }
 
 .my-heading {
   color: burlywood;
   font-family: Arial, sans-serif;
 }
+
+.page-label {
+  font-size: 12px;
+  padding: 2px 32px;
+  border-radius: 12px;
+}
+
+/* Forms, Divs and Modals */
 
 .camera-capture-div {
   display: flex;
@@ -83,7 +104,6 @@
   padding: 10px;
   width: 400px;
   height: 300px;
-
   font-size: 10px;
   background-color: #d2b48c;
 }
@@ -103,24 +123,32 @@
   justify-content: center;
 }
 
-.page-label {
-  font-size: 12px;
-  padding: 2px 32px;
-  border-radius: 12px;
-}
-
-.back-button {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: none;
-  border: none;
-  width: 20px;
-  height: 20px;
-  font-size: 25px;
-}
-
 .back-button-model {
   background: none;
   border: none;
+}
+
+.dashboard {
+  color: black;
+}
+
+.form {
+  color: black;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  width: 500px;
+  height: 500px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: auto;
+}
+
+.form-row-bold {
+  display: flex;
+  justify-content: space-between;
+  margin-right: auto;
 }

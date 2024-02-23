@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import BackButton from "./backButton";
 import axios from "axios";
+import Modal from "react-modal";
+import { CiCircleInfo } from "react-icons/ci";
 
 const Dashboard = () => {
   // Use states for information and data so the values can be used
   const [info, setInfo] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   // Sets timestamp to current time
   const [selectedDate, setSelectedDate] = useState(
@@ -14,11 +17,12 @@ const Dashboard = () => {
   // Sets the value of date when the page opens
   useEffect(() => {
     console.log(selectedDate);
+    fetchInformation();
   }, [selectedDate]);
 
   // makes a get request to /information with selectedDate as a param
   const fetchInformation = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     try {
       // Send a get request to backend
       const response = await axios.get("http://localhost:5000/information", {
@@ -32,6 +36,21 @@ const Dashboard = () => {
     }
   };
 
+  const showNutritionalInfo = (e) => {
+    e.preventDefault();
+    openModal();
+  };
+
+  // Method for opening modal for user input
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  // Method for closing modal for user input
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   // Sets the state variable for date selected by user
   const handleDateChange = (e) => {
     const dateValue = e.target.value;
@@ -40,11 +59,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div
-      style={{
-        color: "black",
-      }}
-    >
+    <div className="dashboard">
       <BackButton />
       <h1>Dashboard</h1>
 
@@ -59,36 +74,49 @@ const Dashboard = () => {
         value={selectedDate}
         onChange={handleDateChange}
       />
-      <br />
-      <br></br>
 
-      <form
-        style={{
-          color: "black",
-          border: "1px solid black",
-          borderRadius: "10px",
-          padding: "10px",
-          width: "300px",
-          height: "400px",
-        }}
-      >
-        <label className="page-label-bold">Food Item</label>
-        <label className="page-label-bold">Calories</label>
-        <br />
-
+      <form className="form">
+        <div className="form-row-bold">
+          <label className="page-label-bold">Food Item</label>
+          <label className="page-label-bold">portion size</label>
+          <label className="page-label-bold">Calories</label>
+          <label className="page-label-bold">More</label>
+        </div>
         {info.map((item) => (
-          // ^ Loops through each item in array
-
-          // displays each item in array with fid as a "Control"
-          <React.Fragment key={item.fid}>
-            <label className="page-label-bold">{item.foodName}</label>
-            <label className="page-label-bold">{item.portionSize}</label>
-            <br />
-          </React.Fragment>
+          <div className="form-row" key={item.fid}>
+            <label className="page-label">{item.foodName}</label>
+            <label className="page-label">{item.portionSize}</label>
+            <label className="page-label">{item.overallCalories}</label>
+            <button className="clearButton" onClick={showNutritionalInfo}>
+              <CiCircleInfo></CiCircleInfo>
+            </button>
+          </div>
         ))}
       </form>
 
-      <button onClick={fetchInformation}></button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Nutrient Information"
+        style={{
+          overlay: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            position: "relative",
+            top: "auto",
+            left: "auto",
+            right: "auto",
+            bottom: "auto",
+            borderRadius: "10px",
+          },
+        }}
+      >
+        <BackButton />
+        testing
+      </Modal>
     </div>
   );
 };

@@ -49,6 +49,7 @@ function CameraCapture() {
     axios
       .post("http://localhost:5000/process", {
         portionSize: portionSize,
+        overallCalories: overallCalories,
       })
       .then(function (response) {
         console.log(response);
