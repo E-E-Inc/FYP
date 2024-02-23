@@ -16,8 +16,7 @@ const Login = () => {
         password,
       });
       console.log(response);
-      //console.log(response.data.message);
-      // Redirect to the home page or any other route after successful login
+        // Redirect to the home page or any other route after successful login
       history.push("/home");
     } catch (error) {
       console.error("Login failed:", error);

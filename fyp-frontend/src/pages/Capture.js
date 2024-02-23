@@ -52,7 +52,7 @@ function CameraCapture() {
       })
       .then(function (response) {
         console.log(response);
-        //setLoading(true);
+
         // Sets the food data and overall calories
         setFoodData(response.data.result);
         setOverallCalories(response.data.overall_calories);
