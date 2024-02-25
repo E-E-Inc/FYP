@@ -8,6 +8,7 @@ const Dashboard = () => {
   // Use states for information and data so the values can be used
   const [info, setInfo] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [results, setResults] = useState(false);
 
   // Sets timestamp to current time
   const [selectedDate, setSelectedDate] = useState(
@@ -21,8 +22,9 @@ const Dashboard = () => {
   }, [selectedDate]);
 
   // makes a get request to /information with selectedDate as a param
-  const fetchInformation = async (e) => {
+  const fetchInformation = async () => {
     //e.preventDefault();
+    setResults(false);
     try {
       // Send a get request to backend
       const response = await axios.get("http://localhost:5000/information", {
@@ -33,6 +35,8 @@ const Dashboard = () => {
       setInfo(response.data);
     } catch (error) {
       console.error("failed to fetch:", error);
+      setInfo([]);
+      setResults(true);
     }
   };
 
@@ -62,7 +66,6 @@ const Dashboard = () => {
     <div className="dashboard">
       <BackButton />
       <h1>Dashboard</h1>
-
       <label htmlFor="date-picker" className="page-label">
         Date:
       </label>
@@ -74,13 +77,14 @@ const Dashboard = () => {
         value={selectedDate}
         onChange={handleDateChange}
       />
-
+      <br /> <br />
       <form className="form">
         <div className="form-row-bold">
           <label className="page-label-bold">Food Item</label>
           <label className="page-label-bold">portion size</label>
           <label className="page-label-bold">Calories</label>
           <label className="page-label-bold">More</label>
+          <br></br>
         </div>
         {info.map((item) => (
           <div className="form-row" key={item.fid}>
@@ -117,6 +121,7 @@ const Dashboard = () => {
             </Modal>
           </div>
         ))}
+        {results && <label className="error-label"> No data to show...</label>}
       </form>
     </div>
   );

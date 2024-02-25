@@ -58,7 +58,7 @@ const Login = () => {
       history.push("/home");
     } catch (error) {
       console.error("Login failed:", error);
-
+      
       if (!emailError) {
         if (!passwordError) {
           setLoginError(true);
@@ -94,7 +94,6 @@ const Login = () => {
             className="page-input"
           />
         </label>
-        
         {passwordError && (
           <label className="error-label">
             Password must be 6 charachters long
