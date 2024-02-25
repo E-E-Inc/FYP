@@ -90,33 +90,34 @@ const Dashboard = () => {
             <button className="clearButton" onClick={showNutritionalInfo}>
               <CiCircleInfo></CiCircleInfo>
             </button>
+
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              contentLabel="Nutrient Information"
+              style={{
+                overlay: {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+                content: {
+                  position: "relative",
+                  top: "auto",
+                  left: "auto",
+                  right: "auto",
+                  bottom: "auto",
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <BackButton />
+              testing
+              <label className="page-label">{item.foodName}</label>
+            </Modal>
           </div>
         ))}
       </form>
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Nutrient Information"
-        style={{
-          overlay: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          content: {
-            position: "relative",
-            top: "auto",
-            left: "auto",
-            right: "auto",
-            bottom: "auto",
-            borderRadius: "10px",
-          },
-        }}
-      >
-        <BackButton />
-        testing
-      </Modal>
     </div>
   );
 };

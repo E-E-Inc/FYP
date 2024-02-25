@@ -2,13 +2,12 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // Import components without curly braces
-import Base from "./pages/BaseScreen";
+import Base from "./pages/BasePage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard";
 import CapturePicturePage from "./pages/CapturePicturePage";
-
 function App() {
   return (
     <div className="App">
