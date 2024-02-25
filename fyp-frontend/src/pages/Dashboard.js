@@ -3,6 +3,7 @@ import BackButton from "./backButton";
 import axios from "axios";
 import Modal from "react-modal";
 import { CiCircleInfo } from "react-icons/ci";
+import { Grid, TextField, Button } from "@mui/material";
 
 const Dashboard = () => {
   // Use states for information and data so the values can be used
@@ -79,49 +80,39 @@ const Dashboard = () => {
       />
       <br /> <br />
       <form className="form">
-        <div className="form-row-bold">
-          <label className="page-label-bold">Food Item</label>
-          <label className="page-label-bold">portion size</label>
-          <label className="page-label-bold">Calories</label>
-          <label className="page-label-bold">More</label>
-          <br></br>
-        </div>
-        {info.map((item) => (
-          <div className="form-row" key={item.fid}>
-            <label className="page-label">{item.foodName}</label>
-            <label className="page-label">{item.portionSize}</label>
-            <label className="page-label">{item.overallCalories}</label>
-            <button className="clearButton" onClick={showNutritionalInfo}>
-              <CiCircleInfo></CiCircleInfo>
-            </button>
+        <Grid container spacing={2}>
+          <Grid item xs={2.5}>
+            <label className="page-label-bold">Food Item</label>
+          </Grid>
+          <Grid item xs={3}>
+            <label className="page-label-bold">portion size</label>
+          </Grid>
+          <Grid item xs={3}>
+            <label className="page-label-bold">Calories</label>
+          </Grid>
+          <Grid item xs={3}>
+            <label className="page-label-bold">More</label>
+          </Grid>
 
-            <Modal
-              isOpen={modalIsOpen}
-              onRequestClose={closeModal}
-              contentLabel="Nutrient Information"
-              style={{
-                overlay: {
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                },
-                content: {
-                  position: "relative",
-                  top: "auto",
-                  left: "auto",
-                  right: "auto",
-                  bottom: "auto",
-                  borderRadius: "10px",
-                },
-              }}
-            >
-              <BackButton />
-              testing
-              <label className="page-label">{item.foodName}</label>
-            </Modal>
-          </div>
-        ))}
-        {results && <label className="error-label"> No data to show...</label>}
+          {info.map((item) => (
+            <React.Fragment key={item.fid}>
+              <Grid item xs={3}>
+                <label className="page-label">{item.foodName}</label>
+              </Grid>
+              <Grid item xs={3}>
+                <label className="page-label">{item.portionSize}</label>
+              </Grid>
+              <Grid item xs={3}>
+                <label className="page-label">{item.overallCalories}</label>
+              </Grid>
+              <Grid item xs={3}>
+                <Button className="clearButton" onClick={showNutritionalInfo}>
+                  <CiCircleInfo />
+                </Button>
+              </Grid>
+            </React.Fragment>
+          ))}
+        </Grid>
       </form>
     </div>
   );
