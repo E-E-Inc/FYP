@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import BackButton from "./backButton";
 import axios from "axios";
+import { Grid, TextField, Button } from "@mui/material";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -34,14 +35,17 @@ const SignUp = () => {
     // Validation
     if (!email || !password) {
       setNodataError(true);
+      return;
     }
 
     if (!validateEmail(email)) {
       setEmailError(true);
+      return;
     }
 
     if (password.length < 6) {
       setPasswordError(true);
+      return;
     }
 
     // Dont display the no data error if there a email & password error already displaying
@@ -73,58 +77,84 @@ const SignUp = () => {
   return (
     <div style={{ color: "black" }}>
       <BackButton />
-      <form>
-        <label className="page-label">
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="page-input"
-          />
-        </label>
+      <form style={{ justifyContent: "flex-start" }}>
+        <Grid
+          container
+          spacing={1}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          {/* Username grid */}
+          <Grid item xs={24}>
+            <Grid item xs={12}>
+              <label className="page-label">
+                Email
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="page-input"
+                />
+              </label>
+            </Grid>
+            <Grid item xs={12}>
+              {emailError && (
+                <label className="error-label">
+                  Please enter a valid email
+                </label>
+              )}
+            </Grid>
+          </Grid>
 
-        {emailError && (
-          <label className="error-label"> Please enter a valid email</label>
-        )}
-        <br />
-        <label className="page-label">
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="page-input"
-          />
-        </label>
+          {/* Password Grid */}
+          <Grid item xs={24}>
+            <Grid item xs={11.7}>
+              {" "}
+              <label className="page-label">
+                Password
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="page-input"
+                />
+              </label>
+            </Grid>
+            <Grid item xs={11.7}>
+              {" "}
+              {passwordError && (
+                <label className="error-label">
+                  Password must be 6 charachters long
+                </label>
+              )}
+            </Grid>
+          </Grid>
 
-        {passwordError && (
-          <label className="error-label">
-            Password must be 6 charachters long
-          </label>
-        )}
+          <Grid item xs={12} justifyContent="flex-start">
+            <button onClick={handleRegister} className="send-button">
+              Sign Up
+            </button>
+            <br />
 
-        {noDataError && (
-          <label className="error-label">
-            {" "}
-            Please enter both an email address and password
-          </label>
-        )}
-        <br />
+            {noDataError && (
+              <label className="error-label">
+                {" "}
+                Please enter both an email address and password
+              </label>
+            )}
 
-        <button onClick={handleRegister} className="send-button">
-          Sign Up
-        </button>
+            {SignUpError && (
+              <label className="error-label">
+                Sign Up unsuccessful. Please check your credentials.
+              </label>
+            )}
 
-        {SignUpError && (
-          <label className="error-label">
-            Sign Up unsuccessful. Please check your credentials.
-          </label>
-        )}
-
-        {dupEmailError && (
-          <label className="error-label"> Email already exists</label>
-        )}
+            {dupEmailError && (
+              <label className="error-label"> Email already exists</label>
+            )}
+          </Grid>
+        </Grid>
       </form>
     </div>
   );

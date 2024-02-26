@@ -19,22 +19,15 @@ const Login = () => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
-  useEffect(() => {
-    if (emailError || passwordError) {
-      setLoginError(true); // Set login error if either email or password is invalid
-    } else {
-      setLoginError(false);
-    }
-  }, [emailError, passwordError]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     // Resetting states
+    setLoginError(false);
     setNodataError(false);
     setEmailError(false);
     setPasswordError(false);
-    setLoginError(false);
 
     // Validation
     if (!email || !password) {
@@ -70,6 +63,9 @@ const Login = () => {
       history.push("/home");
     } catch (error) {
       console.error("Login failed:", error);
+      if (!emailError && !passwordError) {
+        setLoginError(true); // Only set LoginError if there are no email or password errors
+      }
     }
   };
 
@@ -85,51 +81,47 @@ const Login = () => {
         >
           {/* Username Grid */}
           <Grid item xs={24}>
-            <Grid container direction={"column"}>
-              <Grid item xs={12}>
-                <label className="page-label">
-                  Email
-                  <input
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="page-input"
-                  />
+            <Grid item xs={12}>
+              <label className="page-label">
+                Email
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="page-input"
+                />
+              </label>
+            </Grid>
+            <Grid item xs={12}>
+              {emailError && (
+                <label className="error-label">
+                  Please enter a valid email
                 </label>
-              </Grid>
-              <Grid item xs={12}>
-                {emailError && (
-                  <label className="error-label">
-                    Please enter a valid email
-                  </label>
-                )}
-              </Grid>
+              )}
             </Grid>
           </Grid>
 
           {/* Password Grid */}
-          <Grid item xs={12}>
-            <Grid container direction={"column"}>
-              <Grid item xs={6}>
-                <label className="page-label">
-                  Password
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="page-input"
-                  />
-                </label>
-              </Grid>
-              <Grid item xs={6}>
-                <div style={{ height: "20px", marginBottom: "20px" }}>
-                  {passwordError && (
-                    <label className="error-label">
-                      Password must be 6 charachters long
-                    </label>
-                  )}
-                </div>
-              </Grid>
+          <Grid item xs={24}>
+            <Grid item xs={11.7}>
+              <label className="page-label">
+                Password
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="page-input"
+                />
+              </label>
+            </Grid>
+            <Grid item xs={11.7}>
+              <div style={{ height: "20px", marginBottom: "20px" }}>
+                {passwordError && (
+                  <label className="error-label">
+                    Password must be 6 charachters long
+                  </label>
+                )}
+              </div>
             </Grid>
           </Grid>
 
