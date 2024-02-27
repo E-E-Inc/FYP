@@ -3,13 +3,17 @@ import BackButton from "./backButton";
 import axios from "axios";
 import Modal from "react-modal";
 import { CiCircleInfo } from "react-icons/ci";
-import { Grid, TextField, Button } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 
 const Dashboard = () => {
   // Use states for information and data so the values can be used
   const [info, setInfo] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [results, setResults] = useState(false);
+
+  // Store food name and nutrient info
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [nutrientInfo, setNutrientInfo] = useState(null);
 
   // Sets timestamp to current time
   const [selectedDate, setSelectedDate] = useState(
@@ -18,13 +22,11 @@ const Dashboard = () => {
 
   // Sets the value of date when the page opens
   useEffect(() => {
-    console.log(selectedDate);
     fetchInformation();
   }, [selectedDate]);
 
   // makes a get request to /information with selectedDate as a param
   const fetchInformation = async () => {
-    //e.preventDefault();
     setResults(false);
     try {
       // Send a get request to backend
@@ -41,9 +43,28 @@ const Dashboard = () => {
     }
   };
 
-  const showNutritionalInfo = (e) => {
-    e.preventDefault();
-    openModal();
+  const fetchNutritionalInfo = async (foodName, portion_size) => {
+    try {
+      const data = { foodName, portion_size };
+
+      // Send a get request to backend
+      const response = await axios.post(
+        "http://localhost:5000/getNutrition",
+        data
+      );
+
+      // Set the nutrient info to the response.data
+      setNutrientInfo(response.data);
+      setModalIsOpen(true);
+    } catch (error) {
+      console.error("failed to fetch:", error);
+    }
+  };
+
+  const handleNutrientInfo = (foodName) => {
+    // If not, set the selected food and fetch nutrient information
+    setSelectedFood(foodName); // Set the selected food
+    fetchNutritionalInfo(foodName); // Fetch nutrient information for the selected food
   };
 
   // Method for opening modal for user input
@@ -106,12 +127,60 @@ const Dashboard = () => {
                 <label className="page-label">{item.overallCalories}</label>
               </Grid>
               <Grid item xs={3}>
-                <Button className="clearButton" onClick={showNutritionalInfo}>
+                <Button
+                  className="clearButton"
+                  onClick={() =>
+                    fetchNutritionalInfo(item.foodName, item.portionSize)
+                  }
+                >
                   <CiCircleInfo />
                 </Button>
               </Grid>
             </React.Fragment>
           ))}
+
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            contentLabel="Nutrient Information"
+            style={{
+              overlay: {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              },
+              content: {
+                position: "relative",
+                top: "auto",
+                left: "auto",
+                right: "auto",
+                bottom: "auto",
+                borderRadius: "10px",
+              },
+            }}
+          >
+            <BackButton />
+
+            {/* Display nutrient information */}
+            {nutrientInfo && (
+              <div>
+                <h2>Nutrient Information for {nutrientInfo[0].name}</h2>
+                <p>overall calories: {nutrientInfo[0].calories}</p>
+                <p>Fat: {nutrientInfo[0].fat_total_g} grams</p>
+                <p>Saturated Fat: {nutrientInfo[0].fat_saturated_g} grams</p>
+                <p>Protein: {nutrientInfo[0].protein_g} grams</p>
+                <p>Sodium: {nutrientInfo[0].sodium_mg} miligrams</p>
+                <p>Cholesterol: {nutrientInfo[0].cholesterol_mg} miligrams</p>
+                <p>
+                  Carbohydrates: {nutrientInfo[0].carbohydrates_total_g} grams
+                </p>
+                <p>Fiber: {nutrientInfo[0].fiber_g} grams</p>
+                <p>Sugar: {nutrientInfo[0].sugar_g} grams</p>
+
+                {/* Display other nutrient information here */}
+              </div>
+            )}
+          </Modal>
         </Grid>
       </form>
     </div>
