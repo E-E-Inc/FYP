@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import axios from "axios";
 import Modal from "react-modal";
@@ -18,8 +18,19 @@ function CameraCapture() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [CalsmodalIsOpen, setCalsModalIsOpen] = useState(false);
   const [foodData, setFoodData] = useState(null);
-  const [overallCalories, setOverallCalories] = useState(null);
+  const [Calories, setCalories] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [filePath, setFilePath] = useState(null);
+
+  // setFilePath(null);
+  // setCalories(null);
+
+  useEffect(() => {
+    // setFilePath(null);
+    // setCalories(null);
+
+    console.log("File path is:", filePath);
+  }, [filePath]);
 
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -47,20 +58,22 @@ function CameraCapture() {
   const sendPortionSize = () => {
     setLoading(true);
     axios
-      .post("http://localhost:5000/process", {
+      .post("http://localhost:5000/image_process", {
         portionSize: portionSize,
-        overallCalories: overallCalories,
+        Calories: Calories,
+        filePath: filePath,
       })
       .then(function (response) {
         console.log(response);
 
         // Sets the food data and overall calories
         setFoodData(response.data.result);
-        setOverallCalories(response.data.overall_calories);
+        setCalories(response.data.calories);
 
         //reset picture captured to false
         setPictureCaptured(false);
 
+        console.log(Calories);
         //Close User input for calories modal
         closeModal();
         //Open modal for displaying calories
@@ -84,7 +97,7 @@ function CameraCapture() {
     formData.append("file", blob);
 
     try {
-      const response = await fetch("http://localhost:5000/upload", {
+      const response = await fetch("http://localhost:5000/image_upload", {
         method: "POST",
         body: formData,
       });
@@ -92,6 +105,9 @@ function CameraCapture() {
       if (response.ok) {
         const jsonResponse = await response.json();
         console.log("File uploaded successfully", jsonResponse);
+        setFilePath(jsonResponse.file_path); // Update the file path state
+        setPictureCaptured(true); // Open modal after image upload
+        openModal();
       } else {
         console.error("Upload failed", response.status, response.statusText);
       }
@@ -166,9 +182,8 @@ function CameraCapture() {
           <BiArrowBack />
         </button>
         <h1 className="my-heading"> Nutritional Information</h1>
-        {/* Display Food Name and Overall Calories */}
         <h2>Food Name: {foodData}</h2>
-        <h2>Overall Calories: {overallCalories}</h2>
+        <h2>Overall Calories: {Calories}</h2>
       </Modal>
 
       <div style={{ display: "flex", justifyContent: "left", width: "45%" }}>

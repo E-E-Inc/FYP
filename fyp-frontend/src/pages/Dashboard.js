@@ -12,7 +12,6 @@ const Dashboard = () => {
   const [results, setResults] = useState(false);
 
   // Store food name and nutrient info
-  const [selectedFood, setSelectedFood] = useState(null);
   const [nutrientInfo, setNutrientInfo] = useState(null);
 
   // Sets timestamp to current time
@@ -61,16 +60,6 @@ const Dashboard = () => {
     }
   };
 
-  const handleNutrientInfo = (foodName) => {
-    // If not, set the selected food and fetch nutrient information
-    setSelectedFood(foodName); // Set the selected food
-    fetchNutritionalInfo(foodName); // Fetch nutrient information for the selected food
-  };
-
-  // Method for opening modal for user input
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
 
   // Method for closing modal for user input
   const closeModal = () => {

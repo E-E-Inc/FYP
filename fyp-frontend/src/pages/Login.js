@@ -64,7 +64,7 @@ const Login = () => {
     } catch (error) {
       console.error("Login failed:", error);
       if (!emailError && !passwordError) {
-        setLoginError(true); // Only set LoginError if there are no email or password errors
+        setLoginError(true); 
       }
     }
   };
@@ -137,7 +137,6 @@ const Login = () => {
           <Grid item xs={12}>
             {noDataError && (
               <label className="error-label">
-                {" "}
                 Please enter both an email address and password
               </label>
             )}
