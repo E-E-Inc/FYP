@@ -8,7 +8,6 @@ import SignUp from "./pages/SignUp";
 import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard";
 import CapturePicturePage from "./pages/CapturePicturePage";
-import ManualFoodEntry from "./pages/ManualFoodEntry";
 function App() {
   return (
     <div className="App">
@@ -17,7 +16,6 @@ function App() {
           <Switch>
             <Route path="/" exact component={Base} />
             <Route path="/Login" component={Login} />
-            <Route path="/Add" exact component={ManualFoodEntry} />
             <Route path="/SignUp" component={SignUp} />
             <Route path="/Home" component={HomePage} />
             <Route path="/Dashboard" component={Dashboard} />

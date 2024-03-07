@@ -15,6 +15,7 @@ function CameraCapture() {
   // Handles state
   const [pictureCaptured, setPictureCaptured] = useState(false);
   const [portionSize, setPortionSize] = useState(1);
+  const [manualModalIsOpen, setManualModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [CalsmodalIsOpen, setCalsModalIsOpen] = useState(false);
   const [foodData, setFoodData] = useState(null);
@@ -22,13 +23,10 @@ function CameraCapture() {
   const [loading, setLoading] = useState(false);
   const [filePath, setFilePath] = useState(null);
 
-  // setFilePath(null);
-  // setCalories(null);
+  const [foodName, setFoodName] = useState(null);
+  const [portion, setPortion] = useState(null);
 
   useEffect(() => {
-    // setFilePath(null);
-    // setCalories(null);
-
     console.log("File path is:", filePath);
   }, [filePath]);
 
@@ -87,6 +85,38 @@ function CameraCapture() {
       });
   };
 
+  const sendFoodInfo = () => {
+    setLoading(true);
+    axios
+      .post("http://localhost:5000/image_process_manually", {
+        portion: portion,
+        Calories: Calories,
+        foodName: foodName,
+      })
+      .then(function (response) {
+        console.log(response);
+
+        // Sets the food data and overall calories
+        setFoodData(response.data.result);
+        setCalories(response.data.calories);
+
+        //reset picture captured to false
+        setPictureCaptured(false);
+
+        console.log(Calories);
+        //Close User input for calories modal
+        closeManualModal();
+        //Open modal for displaying calories
+        CalsopenModal();
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false regardless of success or failure
+      });
+  };
+
   // Method for closing modal
   const goback = () => {
     CalscloseModal();
@@ -114,6 +144,16 @@ function CameraCapture() {
     } catch (error) {
       console.error("Error during upload", error);
     }
+  };
+
+  // Method for opening modal for user input
+  const openManualModal = () => {
+    setManualModalIsOpen(true);
+  };
+
+  // Method for closing modal for user input
+  const closeManualModal = () => {
+    setManualModalIsOpen(false);
   };
 
   // Method for opening modal for user input
@@ -157,6 +197,7 @@ function CameraCapture() {
         />
       </div>
 
+      {/* Display Calories Model */}
       <Modal
         isOpen={CalsmodalIsOpen}
         onRequestClose={closeModal}
@@ -192,6 +233,13 @@ function CameraCapture() {
         </button>
       </div>
 
+      <div style={{ display: "flex", justifyContent: "left", width: "45%" }}>
+        <button onClick={openManualModal} className="capture-button">
+          Search for Food
+        </button>
+      </div>
+
+      {/* Portion size Model */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -239,6 +287,68 @@ function CameraCapture() {
               style={{ display: loading ? "none" : "block" }}
             >
               Send Portion Size
+            </button>
+          </div>
+        )}
+      </Modal>
+
+      {/* Model for manual food entry */}
+      <Modal
+        isOpen={manualModalIsOpen}
+        onRequestClose={closeManualModal}
+        contentLabel="Manual Input"
+        style={{
+          overlay: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            position: "relative",
+            top: "auto",
+            left: "auto",
+            right: "auto",
+            bottom: "auto",
+            borderRadius: "10px",
+          },
+        }}
+      >
+        {loading ? (
+          <div style={{ textAlign: "center" }}>
+            <FadeLoader />
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <h2>Enter food name</h2>
+            <input
+              type="text"
+              value={foodName}
+              onChange={(e) => setFoodName(e.target.value)}
+              placeholder="Enter Food name"
+              className="food-input"
+              style={{ marginBottom: "10px" }}
+            />
+            <h2>Enter Portion Size</h2>
+            <input
+              type="number"
+              value={portion}
+              onChange={(e) => setPortion(e.target.value)}
+              placeholder="Enter portion size"
+              className="food-input"
+              style={{ marginBottom: "10px" }}
+            />
+            <button
+              onClick={sendFoodInfo}
+              className="send-button"
+              style={{ display: loading ? "none" : "block" }}
+            >
+              Add Food
             </button>
           </div>
         )}
