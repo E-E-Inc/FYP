@@ -10,9 +10,6 @@ const LoginPage = () => {
       <Link to="/Dashboard" className="send-button">
         Calorie Dashboard
       </Link>
-      <Link to="/add" className="send-button">
-        Add Food Manually
-      </Link>
     </div>
   );
 };

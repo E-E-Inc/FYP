@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [info, setInfo] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [results, setResults] = useState(false);
-
+  const [total, setTotal] = useState(0);
   // Store food name and nutrient info
   const [nutrientInfo, setNutrientInfo] = useState(null);
 
@@ -27,6 +27,7 @@ const Dashboard = () => {
   // makes a get request to /information with selectedDate as a param
   const fetchInformation = async () => {
     setResults(false);
+    setTotal(0);
     try {
       // Send a get request to backend
       const response = await axios.get("http://localhost:5000/information", {
@@ -35,11 +36,21 @@ const Dashboard = () => {
         },
       });
       setInfo(response.data);
+      totalCalories(response.data);
     } catch (error) {
       console.error("failed to fetch:", error);
       setInfo([]);
       setResults(true);
     }
+  };
+
+  const totalCalories = (data) => {
+    let dayTotal = 0;
+    data.forEach((item) => {
+      dayTotal += item.overallCalories;
+    });
+    setTotal(dayTotal);
+    console.log(dayTotal);
   };
 
   const fetchNutritionalInfo = async (foodName, portion_size) => {
@@ -59,7 +70,6 @@ const Dashboard = () => {
       console.error("failed to fetch:", error);
     }
   };
-
 
   // Method for closing modal for user input
   const closeModal = () => {
@@ -165,13 +175,12 @@ const Dashboard = () => {
                 </p>
                 <p>Fiber: {nutrientInfo[0].fiber_g} grams</p>
                 <p>Sugar: {nutrientInfo[0].sugar_g} grams</p>
-
-                {/* Display other nutrient information here */}
               </div>
             )}
           </Modal>
         </Grid>
       </form>
+      <p className="page-label">Total Calories: {total} </p>
     </div>
   );
 };
