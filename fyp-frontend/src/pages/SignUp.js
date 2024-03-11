@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import BackButton from "./backButton";
 import axios from "axios";
 import { Grid, TextField, Button } from "@mui/material";
+import Modal from "react-modal";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -16,10 +17,26 @@ const SignUp = () => {
   const [SignUpError, setSignUpError] = useState(false);
   const [dupEmailError, setDupEmailError] = useState(false);
 
+  const [age, setAge] = useState(null);
+  const [gender, setGender] = useState(null);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
   // Function to validate email format
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
+  };
+
+  // Method for closing modal for user input
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  // Method for closing modal for user input
+  const closeModal = () => {
+    history.push("/Login");
+    setModalIsOpen(false);
   };
 
   const handleRegister = async (e) => {
@@ -59,7 +76,7 @@ const SignUp = () => {
         email,
         password,
       });
-      history.push("/Login");
+      setModalIsOpen(true);
     } catch (error) {
       if (
         error.response &&
@@ -74,6 +91,20 @@ const SignUp = () => {
     }
   };
 
+  const handleUpdateUserInfo = async (e) => {
+    e.preventDefault();
+    try {
+      // Send a POST request to your backend for sign-up
+      const response = await axios.post("http://localhost:5000/update_info", {
+        gender,
+        age,
+        email,
+      });
+      history.push("/Login");
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
+  };
   return (
     <div style={{ color: "black" }}>
       <BackButton />
@@ -135,6 +166,7 @@ const SignUp = () => {
             <button onClick={handleRegister} className="send-button">
               Sign Up
             </button>
+
             <br />
 
             {noDataError && (
@@ -153,6 +185,49 @@ const SignUp = () => {
             {dupEmailError && (
               <label className="error-label"> Email already exists</label>
             )}
+
+            {/* Grid for Modal */}
+            <Modal
+              isOpen={modalIsOpen}
+              onClose={closeModal}
+              style={{
+                overlay: {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+                content: {
+                  position: "relative",
+                  top: "auto",
+                  left: "auto",
+                  right: "auto",
+                  bottom: "auto",
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <form>
+                <div style={{ marginBottom: "10px" }}>
+                  <input
+                    type="text"
+                    placeholder="Gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  />
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <input
+                    type="number"
+                    placeholder="Age"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                  />
+                </div>
+                <button type="button" onClick={handleUpdateUserInfo}>
+                  Add Information
+                </button>
+              </form>
+            </Modal>
           </Grid>
         </Grid>
       </form>
