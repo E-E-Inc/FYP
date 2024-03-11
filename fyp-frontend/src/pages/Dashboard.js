@@ -180,6 +180,16 @@ const Dashboard = () => {
           </Modal>
         </Grid>
       </form>
+      {/*  Chart */}
+      <div>
+        <canvas id="myChart">
+          <script src="https://cdn.jsdelivr.net/npm/chart.js">
+            
+
+            
+          </script>
+        </canvas>
+      </div>
       <p className="page-label">Total Calories: {total} </p>
     </div>
   );

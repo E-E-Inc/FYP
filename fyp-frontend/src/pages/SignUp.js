@@ -19,6 +19,8 @@ const SignUp = () => {
 
   const [age, setAge] = useState(null);
   const [gender, setGender] = useState(null);
+  const [weight, setWeight] = useState(0);
+  const [height, setHeight] = useState(0);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -99,6 +101,8 @@ const SignUp = () => {
         gender,
         age,
         email,
+        height,
+        weight,
       });
       history.push("/Login");
     } catch (error) {
@@ -221,6 +225,22 @@ const SignUp = () => {
                     placeholder="Age"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
+                  />
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <input
+                    type="text"
+                    placeholder="Weight"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                  />
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <input
+                    type="decimal"
+                    placeholder="Height"
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
                   />
                 </div>
                 <button type="button" onClick={handleUpdateUserInfo}>
