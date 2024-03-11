@@ -10,19 +10,25 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const history = useHistory();
 
-  // State variable for displaying error
+  // State variable for displaying error for main grid
   const [noDataError, setNodataError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [SignUpError, setSignUpError] = useState(false);
   const [dupEmailError, setDupEmailError] = useState(false);
 
+  // Use states for modal
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
   const [age, setAge] = useState(null);
   const [gender, setGender] = useState(null);
   const [weight, setWeight] = useState(0);
   const [height, setHeight] = useState(0);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [genderError, setGenderError] = useState(false);
+  const [ageError, setAgeError] = useState(false);
+  const [heightError, setHeightError] = useState(false);
+  const [weightError, setWeightError] = useState(false);
 
   // Function to validate email format
   const validateEmail = (email) => {
@@ -95,6 +101,32 @@ const SignUp = () => {
 
   const handleUpdateUserInfo = async (e) => {
     e.preventDefault();
+
+    // Reset any previous error states
+    setGenderError(false);
+    setAgeError(false);
+    setHeightError(false);
+    setWeightError(false);
+
+    // Validate the input values
+    if (gender !== "male" && gender !== "female") {
+      setGenderError(true);
+      return;
+    }
+
+    if (age <= 9 || age >= 100 || isNaN(age)) {
+      setAgeError(true);
+      return;
+    }
+
+    if (!height || height.length != 2 || isNaN(height)) {
+      setHeightError(true);
+    }
+
+    if (!weight || weight.length != 2 || isNaN(weight)) {
+      setWeightError(true);
+    }
+
     try {
       // Send a POST request to your backend for sign-up
       const response = await axios.post("http://localhost:5000/update_info", {
@@ -218,6 +250,11 @@ const SignUp = () => {
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
                   />
+                  {genderError && (
+                    <label className="error-label">
+                      Please enter either male or female
+                    </label>
+                  )}
                 </div>
                 <div style={{ marginBottom: "10px" }}>
                   <input
@@ -226,6 +263,9 @@ const SignUp = () => {
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
                   />
+                  {ageError && (
+                    <label className="error-label"> Please enter an age</label>
+                  )}
                 </div>
                 <div style={{ marginBottom: "10px" }}>
                   <input
@@ -234,6 +274,12 @@ const SignUp = () => {
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
                   />
+
+                  {weightError && (
+                    <label className="error-label">
+                      Please enter a valid weight
+                    </label>
+                  )}
                 </div>
                 <div style={{ marginBottom: "10px" }}>
                   <input
@@ -242,6 +288,12 @@ const SignUp = () => {
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
                   />
+                  {heightError && (
+                    <label className="error-label">
+                      {" "}
+                      Please enter a valid height
+                    </label>
+                  )}
                 </div>
                 <button type="button" onClick={handleUpdateUserInfo}>
                   Add Information
