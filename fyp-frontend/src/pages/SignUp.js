@@ -30,6 +30,8 @@ const SignUp = () => {
   const [heightError, setHeightError] = useState(false);
   const [weightError, setWeightError] = useState(false);
 
+  const [totalcalsneeded, setTotalcalsneeded] = useState(0);
+
   // Function to validate email format
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
@@ -137,6 +139,10 @@ const SignUp = () => {
         height,
         weight,
       });
+      console.log(response);
+      const totalBMR = response.data.total;
+      console.log("total from backend", totalBMR);
+      setTotalcalsneeded(totalBMR);
       history.push("/Login");
     } catch (error) {
       console.error("Registration failed:", error);
