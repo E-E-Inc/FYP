@@ -17,7 +17,7 @@ const SignUp = () => {
   const [SignUpError, setSignUpError] = useState(false);
   const [dupEmailError, setDupEmailError] = useState(false);
 
-  // Use states for modal
+  // Use states for additional information modal
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [age, setAge] = useState(null);
@@ -47,6 +47,7 @@ const SignUp = () => {
     setModalIsOpen(false);
   };
 
+  // Method for sending a post request to /register to register a user
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -92,13 +93,13 @@ const SignUp = () => {
         error.response.data.error === "Email already exists"
       ) {
         setDupEmailError(true);
-        console.log("HERE");
       } else {
         console.error("Registration failed:", error);
       }
     }
   };
 
+  // Method for sending a post request to /update_info to update user information
   const handleUpdateUserInfo = async (e) => {
     e.preventDefault();
 
@@ -205,6 +206,7 @@ const SignUp = () => {
 
             <br />
 
+            {/* Error messages */}
             {noDataError && (
               <label className="error-label">
                 {" "}

@@ -22,7 +22,6 @@ function CameraCapture() {
   const [Calories, setCalories] = useState(null);
   const [loading, setLoading] = useState(false);
   const [filePath, setFilePath] = useState(null);
-
   const [foodName, setFoodName] = useState(null);
   const [portion, setPortion] = useState(null);
 
@@ -30,6 +29,7 @@ function CameraCapture() {
     console.log("File path is:", filePath);
   }, [filePath]);
 
+  // Method to deal with captured image
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
@@ -42,6 +42,7 @@ function CameraCapture() {
     }
   };
 
+  // Convert URL to a blob
   function dataURLtoBlob(dataURL) {
     const byteString = atob(dataURL.split(",")[1]);
     const mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
@@ -53,6 +54,7 @@ function CameraCapture() {
     return new Blob([ab], { type: mimeString });
   }
 
+  // Method for sending a post request to /image_process to process the photo taken by the user
   const sendPortionSize = () => {
     setLoading(true);
     axios
@@ -85,6 +87,7 @@ function CameraCapture() {
       });
   };
 
+  // Method for sending a post request to /image_process_manually to process the food inputted by the user
   const sendFoodInfo = () => {
     setLoading(true);
     axios
@@ -122,6 +125,7 @@ function CameraCapture() {
     CalscloseModal();
   };
 
+  // Method for sending a post request to /image_upload to upload the photo taken by the user
   const uploadBlob = async (blob) => {
     const formData = new FormData();
     formData.append("file", blob);
@@ -175,6 +179,7 @@ function CameraCapture() {
   const CalscloseModal = () => {
     setCalsModalIsOpen(false);
   };
+
   return (
     <div className="camera-capture-div">
       <BackButton />

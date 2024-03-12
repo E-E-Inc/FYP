@@ -20,6 +20,7 @@ const Login = () => {
     return re.test(email);
   };
 
+  // Method for sending a post request to /login to login a user
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -64,7 +65,7 @@ const Login = () => {
     } catch (error) {
       console.error("Login failed:", error);
       if (!emailError && !passwordError) {
-        setLoginError(true); 
+        setLoginError(true);
       }
     }
   };
@@ -125,7 +126,6 @@ const Login = () => {
             </Grid>
           </Grid>
 
-          {/* Error messages */}
           <b />
           <Grid item xs={2}>
             <button className="send-button" onClick={handleLogin}>
@@ -134,6 +134,7 @@ const Login = () => {
             <br />
           </Grid>
 
+          {/* Error messages */}
           <Grid item xs={12}>
             {noDataError && (
               <label className="error-label">

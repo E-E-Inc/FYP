@@ -44,15 +44,16 @@ const Dashboard = () => {
     }
   };
 
+  // calculates total calories
   const totalCalories = (data) => {
     let dayTotal = 0;
     data.forEach((item) => {
       dayTotal += item.overallCalories;
     });
     setTotal(dayTotal);
-    console.log(dayTotal);
   };
 
+  // makes a get request to /getNutrition with foodName and portion_size as a param
   const fetchNutritionalInfo = async (foodName, portion_size) => {
     try {
       const data = { foodName, portion_size };
@@ -80,7 +81,6 @@ const Dashboard = () => {
   const handleDateChange = (e) => {
     const dateValue = e.target.value;
     setSelectedDate(dateValue);
-    console.log("Selected Date:", dateValue);
   };
 
   return (
@@ -94,7 +94,6 @@ const Dashboard = () => {
         type="date"
         id="date-picker"
         name="date-picker"
-        //Sets the value and calls handleDateChange when value is updated
         value={selectedDate}
         onChange={handleDateChange}
       />
@@ -114,6 +113,7 @@ const Dashboard = () => {
             <label className="page-label-bold">More</label>
           </Grid>
 
+          {/* Grid for displaying food info for a user from database */}
           {info.map((item) => (
             <React.Fragment key={item.fid}>
               <Grid item xs={3}>
@@ -138,6 +138,7 @@ const Dashboard = () => {
             </React.Fragment>
           ))}
 
+          {/* Modal for displaying nutritional information in a popup */}
           <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
@@ -183,11 +184,7 @@ const Dashboard = () => {
       {/*  Chart */}
       <div>
         <canvas id="myChart">
-          <script src="https://cdn.jsdelivr.net/npm/chart.js">
-            
-
-            
-          </script>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         </canvas>
       </div>
       <p className="page-label">Total Calories: {total} </p>
