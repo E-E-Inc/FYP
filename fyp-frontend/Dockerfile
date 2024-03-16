@@ -23,13 +23,13 @@ RUN npm run build
 FROM node:14-alpine
 
 # Set the working directory in the Docker image
-WORKDIR /usr/src/app
+WORKDIR /fyp-frontend
 
 # Install serve to serve the built application
 RUN npm install -g serve
 
 # Copy the built application from the previous stage
-COPY --from=0 /usr/src/app/build .
+COPY --from=0 /fyp-frontend .
 
 # Expose port 5000 for the application
 EXPOSE 3000

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "./backButton";
 import axios from "axios";
 import Modal from "react-modal";
@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [total, setTotal] = useState(0);
   // Store food name and nutrient info
   const [nutrientInfo, setNutrientInfo] = useState(null);
-  const [setTest] = useState(null);
+  const [test, setTest] = useState(null);
 
   // Sets timestamp to current time
   const [selectedDate, setSelectedDate] = useState(
@@ -25,10 +25,10 @@ const Dashboard = () => {
     fetchInformation();
   }, [selectedDate]);
 
-  const fetchInformation = useCallback(async () => {
+  // makes a get request to /information with selectedDate as a param
+  const fetchInformation = async () => {
     setResults(false);
     setTotal(0);
-
     try {
       // Send a get request to backend
       const response = await axios.get("http://localhost:5000/information", {
@@ -39,23 +39,23 @@ const Dashboard = () => {
       setInfo(response.data);
       totalCalories(response.data.rows);
       setTest(response.data.totalCalsNeeded);
-      console.log(results);
     } catch (error) {
       console.error("failed to fetch:", error);
       setInfo([]);
       setResults(true);
     }
-  }, [selectedDate]); // Add selectedDate as a dependency to useCallback
+  };
 
   // calculates total calories
   const totalCalories = (data) => {
     let dayTotal = 0;
-    data.forEach((item) => {
-      dayTotal += item.overallCalories;
-    });
+    if (data) {
+      data.forEach((item) => {
+        dayTotal += item.overallCalories;
+      });
+    }
     setTotal(dayTotal);
   };
-
   // makes a get request to /getNutrition with foodName and portion_size as a param
   const fetchNutritionalInfo = async (foodName, portion_size) => {
     try {
@@ -66,7 +66,7 @@ const Dashboard = () => {
         "http://localhost:5000/getNutrition",
         data
       );
-
+      console.log(response.data);
       // Set the nutrient info to the response.data
       setNutrientInfo(response.data);
       setModalIsOpen(true);
@@ -117,29 +117,30 @@ const Dashboard = () => {
           </Grid>
 
           {/* Grid for displaying food info for a user from database */}
-          {info.map((item) => (
-            <React.Fragment key={item.fid}>
-              <Grid item xs={3}>
-                <label className="page-label">{item.foodName}</label>
-              </Grid>
-              <Grid item xs={3}>
-                <label className="page-label">{item.portionSize}</label>
-              </Grid>
-              <Grid item xs={3}>
-                <label className="page-label">{item.overallCalories}</label>
-              </Grid>
-              <Grid item xs={3}>
-                <Button
-                  className="clearButton"
-                  onClick={() =>
-                    fetchNutritionalInfo(item.foodName, item.portionSize)
-                  }
-                >
-                  <CiCircleInfo />
-                </Button>
-              </Grid>
-            </React.Fragment>
-          ))}
+          {info &&
+            info.map((item) => (
+              <React.Fragment key={item.fid}>
+                <Grid item xs={3}>
+                  <label className="page-label">{item.foodName}</label>
+                </Grid>
+                <Grid item xs={3}>
+                  <label className="page-label">{item.portionSize}</label>
+                </Grid>
+                <Grid item xs={3}>
+                  <label className="page-label">{item.overallCalories}</label>
+                </Grid>
+                <Grid item xs={3}>
+                  <Button
+                    className="clearButton"
+                    onClick={() =>
+                      fetchNutritionalInfo(item.foodName, item.portionSize)
+                    }
+                  >
+                    <CiCircleInfo />
+                  </Button>
+                </Grid>
+              </React.Fragment>
+            ))}
 
           {/* Modal for displaying nutritional information in a popup */}
           <Modal
