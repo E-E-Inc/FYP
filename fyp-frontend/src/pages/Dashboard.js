@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import BackButton from "./backButton";
 import axios from "axios";
 import Modal from "react-modal";
@@ -25,10 +25,10 @@ const Dashboard = () => {
     fetchInformation();
   }, [selectedDate]);
 
-  // makes a get request to /information with selectedDate as a param
-  const fetchInformation = async () => {
+  const fetchInformation = useCallback(async () => {
     setResults(false);
     setTotal(0);
+
     try {
       // Send a get request to backend
       const response = await axios.get("http://localhost:5000/information", {
@@ -39,12 +39,13 @@ const Dashboard = () => {
       setInfo(response.data);
       totalCalories(response.data.rows);
       setTest(response.data.totalCalsNeeded);
+      console.log(results);
     } catch (error) {
       console.error("failed to fetch:", error);
       setInfo([]);
       setResults(true);
     }
-  };
+  }, [selectedDate]); // Add selectedDate as a dependency to useCallback
 
   // calculates total calories
   const totalCalories = (data) => {

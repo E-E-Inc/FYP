@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 // Import components without curly braces
 import Base from "./pages/BasePage";
@@ -14,7 +15,12 @@ function App() {
       <header className="App-header">
         <Router>
           <Switch>
-            <Route path="/" exact component={Base} />
+            {/* <Route path="/" exact component={Base} /> */}
+            <Route exact path="/">
+              <Redirect to="/basePage" />
+            </Route>
+
+            <Route path="/basePage" component={Base} />
             <Route path="/Login" component={Login} />
             <Route path="/SignUp" component={SignUp} />
             <Route path="/Home" component={HomePage} />
