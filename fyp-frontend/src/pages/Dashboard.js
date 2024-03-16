@@ -13,6 +13,7 @@ const Dashboard = () => {
   const [total, setTotal] = useState(0);
   // Store food name and nutrient info
   const [nutrientInfo, setNutrientInfo] = useState(null);
+  const [test, setTest] = useState(null);
 
   // Sets timestamp to current time
   const [selectedDate, setSelectedDate] = useState(
@@ -36,7 +37,8 @@ const Dashboard = () => {
         },
       });
       setInfo(response.data);
-      totalCalories(response.data);
+      totalCalories(response.data.rows);
+      setTest(response.data.totalCalsNeeded);
     } catch (error) {
       console.error("failed to fetch:", error);
       setInfo([]);
