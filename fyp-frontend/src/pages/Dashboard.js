@@ -36,9 +36,10 @@ const Dashboard = () => {
           selectedDate: selectedDate,
         },
       });
+
       setInfo(response.data);
-      totalCalories(response.data.rows);
-      setTest(response.data.totalCalsNeeded);
+      totalCalories(response.data);
+      console.log(response.data[1]);
     } catch (error) {
       console.error("failed to fetch:", error);
       setInfo([]);
@@ -48,13 +49,19 @@ const Dashboard = () => {
 
   // calculates total calories
   const totalCalories = (data) => {
+    console.log("DATA >", data);
+
     let dayTotal = 0;
     if (data) {
       data.forEach((item) => {
-        dayTotal += item.overallCalories;
+        //console.log("ITEM >", item);
+        dayTotal += parseFloat(item.overallCalories);
       });
+
+      console.log("DAY TOTAL", dayTotal);
+      setTotal(dayTotal);
     }
-    setTotal(dayTotal);
+    console.log("TOTAL", total);
   };
   // makes a get request to /getNutrition with foodName and portion_size as a param
   const fetchNutritionalInfo = async (foodName, portion_size) => {
