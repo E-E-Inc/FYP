@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import BackButton from "./backButton";
 import axios from "axios";
-import { Grid, TextField, Button } from "@mui/material";
+import { Grid } from "@mui/material";
 import Modal from "react-modal";
 
 const SignUp = () => {
@@ -30,17 +30,12 @@ const SignUp = () => {
   const [heightError, setHeightError] = useState(false);
   const [weightError, setWeightError] = useState(false);
 
-  const [totalcalsneeded, setTotalcalsneeded] = useState(0);
+  const [setTotalcalsneeded] = useState(0);
 
   // Function to validate email format
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
-  };
-
-  // Method for closing modal for user input
-  const openModal = () => {
-    setModalIsOpen(true);
   };
 
   // Method for closing modal for user input
@@ -87,6 +82,7 @@ const SignUp = () => {
         email,
         password,
       });
+      console.log(response);
       setModalIsOpen(true);
     } catch (error) {
       if (
@@ -122,11 +118,11 @@ const SignUp = () => {
       return;
     }
 
-    if (!height || height.length != 2 || isNaN(height)) {
+    if (!height || height.length !== 2 || isNaN(height)) {
       setHeightError(true);
     }
 
-    if (!weight || weight.length != 2 || isNaN(weight)) {
+    if (!weight || weight.length !== 2 || isNaN(weight)) {
       setWeightError(true);
     }
 

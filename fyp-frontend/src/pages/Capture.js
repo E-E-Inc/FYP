@@ -13,7 +13,7 @@ function CameraCapture() {
   const webcamRef = useRef(null);
 
   // Handles state
-  const [pictureCaptured, setPictureCaptured] = useState(false);
+  const [ setPictureCaptured] = useState(false);
   const [portionSize, setPortionSize] = useState(1);
   const [manualModalIsOpen, setManualModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
