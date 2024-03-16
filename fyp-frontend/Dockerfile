@@ -32,4 +32,4 @@ COPY --from=0 /usr/src/app/build .
 EXPOSE 3000
 
 # Define the command to run the application
-CMD [ "serve", "-s", ".", "-l", "3000" ]
+CMD [ "npm", "start" ]
