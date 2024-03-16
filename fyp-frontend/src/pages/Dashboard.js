@@ -9,7 +9,7 @@ const Dashboard = () => {
   // Use states for information and data so the values can be used
   const [info, setInfo] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [setResults] = useState(false);
+  const [results, setResults] = useState(false);
   const [total, setTotal] = useState(0);
   // Store food name and nutrient info
   const [nutrientInfo, setNutrientInfo] = useState(null);
