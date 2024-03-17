@@ -1,9 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import BackButton from "./backButton";
 import axios from "axios";
 import Modal from "react-modal";
 import { CiCircleInfo } from "react-icons/ci";
 import { Grid, Button } from "@mui/material";
+
+import {
+  Chart,
+  BarController,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+Chart.register(
+  BarController,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Dashboard = () => {
   // Use states for information and data so the values can be used
@@ -13,8 +34,8 @@ const Dashboard = () => {
   const [total, setTotal] = useState(0);
   // Store food name and nutrient info
   const [nutrientInfo, setNutrientInfo] = useState(null);
-  const [test, setTest] = useState(null);
-
+  const [neededCalories, setNeededCalories] = useState(null);
+  const chartRef = useRef(null);
   // Sets timestamp to current time
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().substr(0, 10)
@@ -24,6 +45,43 @@ const Dashboard = () => {
   useEffect(() => {
     fetchInformation();
   }, [selectedDate]);
+
+  // Creates a chart for displaying the total calories and needed calories
+  useEffect(() => {
+    if (chartRef.current) {
+      chartRef.current.destroy();
+    }
+
+    const ctx = document.getElementById("myChart").getContext("2d");
+    chartRef.current = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Needed Calories", "Total Calories"],
+        datasets: [
+          {
+            label: "# of Calories",
+            data: [neededCalories, total],
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+            ],
+            borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              type: "linear",
+              beginAtZero: true,
+            },
+          ],
+        },
+      },
+    });
+  }, [neededCalories, total]);
 
   // makes a get request to /information with selectedDate as a param
   const fetchInformation = async () => {
@@ -39,7 +97,6 @@ const Dashboard = () => {
 
       setInfo(response.data);
       totalCalories(response.data);
-      console.log(response.data[1]);
     } catch (error) {
       console.error("failed to fetch:", error);
       setInfo([]);
@@ -47,21 +104,33 @@ const Dashboard = () => {
     }
   };
 
+  // makes a get request to /needed_calories
+  const fetchNeededCalories = async () => {
+    console.log("fetching needed calories");
+
+    try {
+      // Send a get request to backend
+      const response = await axios.get("http://localhost:5000/needed_calories");
+      setNeededCalories(response.data);
+    } catch (error) {
+      console.error("failed to fetch:", error);
+    }
+  };
+
   // calculates total calories
   const totalCalories = (data) => {
-    console.log("DATA >", data);
+    //console.log("DATA >", data);
 
     let dayTotal = 0;
     if (data) {
       data.forEach((item) => {
-        //console.log("ITEM >", item);
         dayTotal += parseFloat(item.overallCalories);
       });
 
-      console.log("DAY TOTAL", dayTotal);
+      //console.log("DAY TOTAL", dayTotal);
       setTotal(dayTotal);
     }
-    console.log("TOTAL", total);
+    //console.log("TOTAL", total);
   };
   // makes a get request to /getNutrition with foodName and portion_size as a param
   const fetchNutritionalInfo = async (foodName, portion_size) => {
@@ -73,7 +142,7 @@ const Dashboard = () => {
         "http://localhost:5000/getNutrition",
         data
       );
-      console.log(response.data);
+      //console.log(response.data);
       // Set the nutrient info to the response.data
       setNutrientInfo(response.data);
       setModalIsOpen(true);
@@ -193,6 +262,7 @@ const Dashboard = () => {
         </Grid>
       </form>
       <p className="page-label">Total Calories: {total} </p>
+      <canvas id="myChart" width="400" height="400"></canvas>
     </div>
   );
 };

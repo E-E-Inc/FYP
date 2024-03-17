@@ -118,11 +118,11 @@ const SignUp = () => {
       return;
     }
 
-    if (!height || height.length !== 2 || isNaN(height)) {
+    if (!height || height.length !== 3 || isNaN(height)) {
       setHeightError(true);
     }
 
-    if (!weight || weight.length !== 2 || isNaN(weight)) {
+    if (!weight || weight.length !== 3 || isNaN(weight)) {
       setWeightError(true);
     }
 
