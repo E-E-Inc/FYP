@@ -35,6 +35,7 @@ const Dashboard = () => {
   // Store food name and nutrient info
   const [nutrientInfo, setNutrientInfo] = useState(null);
   const [neededCalories, setNeededCalories] = useState(null);
+  const [difference, setDifference] = useState(null);
   const chartRef = useRef(null);
   // Sets timestamp to current time
   const [selectedDate, setSelectedDate] = useState(
@@ -44,6 +45,7 @@ const Dashboard = () => {
   // Sets the value of date when the page opens
   useEffect(() => {
     fetchInformation();
+    setDifference(neededCalories - total);
     //fetchNeededCalories();
   }, [selectedDate]);
 
@@ -95,8 +97,10 @@ const Dashboard = () => {
 
   // makes a get request to /information with selectedDate as a param
   const fetchInformation = async () => {
+    setDifference(0);
     setResults(false);
     setTotal(0);
+
     try {
       // Send a get request to backend
       const response = await axios.get("http://localhost:5000/information", {
@@ -273,6 +277,10 @@ const Dashboard = () => {
         </Grid>
       </form>
       <p className="page-label">Total Calories: {total} </p>
+      <p className="page-label">
+        Recommended Calories Requires: {neededCalories}{" "}
+      </p>
+      {/* <p className="page-label">Difference: {difference} </p> */}
       <br /> <br />
       <canvas id="myChart" width="400" height="400"></canvas>
     </div>

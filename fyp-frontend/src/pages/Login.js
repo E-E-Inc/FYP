@@ -131,7 +131,11 @@ const Login = () => {
 
           <b />
           <Grid item xs={2}>
-            <button className="send-button" onClick={handleLogin}>
+            <button
+              data-testid="submit-button"
+              className="send-button"
+              onClick={handleLogin}
+            >
               Login
             </button>
             <br />

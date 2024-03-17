@@ -201,7 +201,11 @@ const SignUp = () => {
           </Grid>
 
           <Grid item xs={12} justifyContent="flex-start">
-            <button onClick={handleRegister} className="send-button">
+            <button
+              onClick={handleRegister}
+              className="send-button"
+              data-testid="register-button"
+            >
               Sign Up
             </button>
 

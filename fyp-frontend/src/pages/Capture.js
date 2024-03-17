@@ -38,7 +38,6 @@ function CameraCapture() {
 
       // Sets that a picture is captured and opens the Modal
       setPictureCaptured(true);
-      openModal();
     }
   };
 
@@ -76,8 +75,13 @@ function CameraCapture() {
         console.log(Calories);
         //Close User input for calories modal
         closeModal();
-        //Open modal for displaying calories
-        CalsopenModal();
+        // If no food data is returned, open the manual food entry modal
+        if (!response.data.result) {
+          openManualModal();
+        } else {
+          //Open modal for displaying calories
+          CalsopenModal();
+        }
       })
       .catch(function (error) {
         console.log(error);
