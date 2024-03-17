@@ -46,7 +46,7 @@ const Dashboard = () => {
   useEffect(() => {
     fetchInformation();
     setDifference(neededCalories - total);
-    //fetchNeededCalories();
+   
   }, [selectedDate]);
 
   // Creates a chart for displaying the total calories and needed calories
