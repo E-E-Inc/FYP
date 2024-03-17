@@ -44,6 +44,7 @@ const Dashboard = () => {
   // Sets the value of date when the page opens
   useEffect(() => {
     fetchInformation();
+    //fetchNeededCalories();
   }, [selectedDate]);
 
   // Creates a chart for displaying the total calories and needed calories
@@ -56,16 +57,25 @@ const Dashboard = () => {
     chartRef.current = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["Needed Calories", "Total Calories"],
+        labels: ["Calories"],
         datasets: [
           {
-            label: "# of Calories",
+            label: "Calories Required",
+
             data: [neededCalories, total],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
             ],
             borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+            borderWidth: 1,
+          },
+          {
+            label: "Calories Consumed",
+
+            data: [total],
+            backgroundColor: ["rgba(54, 162, 235, 0.2)"],
+            borderColor: ["rgba(54, 162, 235, 1)"],
             borderWidth: 1,
           },
         ],
@@ -97,6 +107,7 @@ const Dashboard = () => {
 
       setInfo(response.data);
       totalCalories(response.data);
+      fetchNeededCalories();
     } catch (error) {
       console.error("failed to fetch:", error);
       setInfo([]);
@@ -262,6 +273,7 @@ const Dashboard = () => {
         </Grid>
       </form>
       <p className="page-label">Total Calories: {total} </p>
+      <br /> <br />
       <canvas id="myChart" width="400" height="400"></canvas>
     </div>
   );

@@ -136,11 +136,11 @@ const SignUp = () => {
         height,
         weight,
       });
-      history.push("/Login");
       const totalBMR = response.data.total;
       setTotalcalsneeded(totalBMR);
+      history.push("/Login");
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Update failed:", error);
     }
   };
   return (

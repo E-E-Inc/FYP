@@ -144,6 +144,7 @@ function CameraCapture() {
         openModal();
       } else {
         console.error("Upload failed", response.status, response.statusText);
+        openManualModal();
       }
     } catch (error) {
       console.error("Error during upload", error);
