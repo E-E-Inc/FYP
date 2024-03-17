@@ -95,6 +95,20 @@
   font-weight: bold;
 }
 
+.page-label-bold-age {
+  font-size: 12px;
+  margin-left: 30px;
+  font-weight: bold;
+  margin-right: 46px;
+}
+
+.page-label-bold-gender {
+  font-size: 12px;
+  margin-left: 30px;
+  font-weight: bold;
+  margin-right: 27px;
+}
+
 .my-heading {
   color: burlywood;
   font-family: Arial, sans-serif;

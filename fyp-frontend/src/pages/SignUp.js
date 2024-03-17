@@ -4,6 +4,7 @@ import BackButton from "./backButton";
 import axios from "axios";
 import { Grid } from "@mui/material";
 import Modal from "react-modal";
+import { Box } from "@mui/material";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -248,11 +249,15 @@ const SignUp = () => {
             >
               <form>
                 <div style={{ marginBottom: "10px" }}>
+                  <label className="page-label-bold-gender">
+                    Enter Gender{" "}
+                  </label>
                   <input
                     type="text"
                     placeholder="Gender"
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
+                    className="page-input"
                   />
                   {genderError && (
                     <label className="error-label">
@@ -261,22 +266,26 @@ const SignUp = () => {
                   )}
                 </div>
                 <div style={{ marginBottom: "10px" }}>
+                  <label className="page-label-bold-age">Enter Age </label>
                   <input
                     type="number"
                     placeholder="Age"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
+                    className="page-input"
                   />
                   {ageError && (
                     <label className="error-label"> Please enter an age</label>
                   )}
                 </div>
                 <div style={{ marginBottom: "10px" }}>
+                  <label className="page-label-bold">Enter Weight (kg) </label>
                   <input
                     type="text"
                     placeholder="Weight"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
+                    className="page-input"
                   />
 
                   {weightError && (
@@ -286,11 +295,13 @@ const SignUp = () => {
                   )}
                 </div>
                 <div style={{ marginBottom: "10px" }}>
+                  <label className="page-label-bold">Enter Height (cm) </label>
                   <input
                     type="decimal"
                     placeholder="Height"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
+                    className="page-input"
                   />
                   {heightError && (
                     <label className="error-label">
@@ -299,9 +310,15 @@ const SignUp = () => {
                     </label>
                   )}
                 </div>
-                <button type="button" onClick={handleUpdateUserInfo}>
-                  Add Information
-                </button>
+                <Box display="flex" justifyContent="center">
+                  <button
+                    type="button"
+                    className="send-button"
+                    onClick={handleUpdateUserInfo}
+                  >
+                    Add Information
+                  </button>
+                </Box>
               </form>
             </Modal>
           </Grid>
