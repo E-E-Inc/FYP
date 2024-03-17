@@ -60,7 +60,7 @@ const Dashboard = () => {
         labels: ["Calories"],
         datasets: [
           {
-            label: "Calories Required",
+            label: "Recommended Calories Intake",
 
             data: [neededCalories, total],
             backgroundColor: [
