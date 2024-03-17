@@ -119,11 +119,11 @@ const SignUp = () => {
       return;
     }
 
-    if (!height || height.length !== 3 || isNaN(height)) {
+    if (!height || height.length > 3 || isNaN(height)) {
       setHeightError(true);
     }
 
-    if (!weight || weight.length !== 3 || isNaN(weight)) {
+    if (!weight || weight.length > 3 || isNaN(weight)) {
       setWeightError(true);
     }
 
@@ -136,11 +136,9 @@ const SignUp = () => {
         height,
         weight,
       });
-      console.log(response);
-      const totalBMR = response.data.total;
-      console.log("total from backend", totalBMR);
-      setTotalcalsneeded(totalBMR);
       history.push("/Login");
+      const totalBMR = response.data.total;
+      setTotalcalsneeded(totalBMR);
     } catch (error) {
       console.error("Registration failed:", error);
     }
