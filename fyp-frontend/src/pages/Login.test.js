@@ -28,7 +28,7 @@ describe("Login", () => {
       target: { value: "email@example.com" },
     });
     fireEvent.input(getByLabelText("Password"), {
-      target: { value: "pass" }, // password less than 6 chars
+      target: { value: "pass" },
     });
 
     fireEvent.click(getByTestId("submit-button"));
@@ -47,7 +47,7 @@ describe("Login", () => {
       target: { value: "email" },
     });
     fireEvent.input(getByLabelText("Password"), {
-      target: { value: "password" }, // password less than 6 chars
+      target: { value: "password" },
     });
 
     fireEvent.click(getByTestId("submit-button"));

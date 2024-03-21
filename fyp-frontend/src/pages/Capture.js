@@ -79,7 +79,6 @@ function CameraCapture() {
         if (!response.data.result) {
           openManualModal();
         } else {
-          //Open modal for displaying calories
           CalsopenModal();
         }
       })
@@ -87,7 +86,7 @@ function CameraCapture() {
         console.log(error);
       })
       .finally(() => {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false);
       });
   };
 
@@ -110,7 +109,6 @@ function CameraCapture() {
         //reset picture captured to false
         setPictureCaptured(false);
 
-        console.log(Calories);
         //Close User input for calories modal
         closeManualModal();
         //Open modal for displaying calories
@@ -120,7 +118,7 @@ function CameraCapture() {
         console.log(error);
       })
       .finally(() => {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false);
       });
   };
 
@@ -143,8 +141,8 @@ function CameraCapture() {
       if (response.ok) {
         const jsonResponse = await response.json();
         console.log("File uploaded successfully", jsonResponse);
-        setFilePath(jsonResponse.file_path); // Update the file path state
-        setPictureCaptured(true); // Open modal after image upload
+        setFilePath(jsonResponse.file_path); 
+        setPictureCaptured(true);
         openModal();
       } else {
         console.error("Upload failed", response.status, response.statusText);

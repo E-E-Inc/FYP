@@ -16,7 +16,7 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Use an official lightweight Node.js runtime as the base image for the built application
+# Node.js runtime 
 FROM node:14-alpine
 
 # Set the working directory in the Docker image

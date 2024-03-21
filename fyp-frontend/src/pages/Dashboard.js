@@ -46,7 +46,6 @@ const Dashboard = () => {
   useEffect(() => {
     fetchInformation();
     setDifference(neededCalories - total);
-   
   }, [selectedDate]);
 
   // Creates a chart for displaying the total calories and needed calories
@@ -134,19 +133,15 @@ const Dashboard = () => {
 
   // calculates total calories
   const totalCalories = (data) => {
-    //console.log("DATA >", data);
-
     let dayTotal = 0;
     if (data) {
       data.forEach((item) => {
         dayTotal += parseFloat(item.overallCalories);
       });
-
-      //console.log("DAY TOTAL", dayTotal);
       setTotal(dayTotal);
     }
-    //console.log("TOTAL", total);
   };
+
   // makes a get request to /getNutrition with foodName and portion_size as a param
   const fetchNutritionalInfo = async (foodName, portion_size) => {
     try {
@@ -157,7 +152,7 @@ const Dashboard = () => {
         "http://localhost:5000/getNutrition",
         data
       );
-      //console.log(response.data);
+
       // Set the nutrient info to the response.data
       setNutrientInfo(response.data);
       setModalIsOpen(true);
@@ -278,9 +273,8 @@ const Dashboard = () => {
       </form>
       <p className="page-label">Total Calories: {total} </p>
       <p className="page-label">
-        Recommended Calories Requires: {neededCalories}{" "}
+        Recommended Calories Requires: {neededCalories}
       </p>
-      {/* <p className="page-label">Difference: {difference} </p> */}
       <br /> <br />
       <canvas id="myChart" width="400" height="400"></canvas>
     </div>
