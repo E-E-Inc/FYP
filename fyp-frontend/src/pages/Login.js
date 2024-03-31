@@ -54,10 +54,14 @@ const Login = () => {
 
     try {
       // Send a POST request to your backend for login
-      const response = await axios.post("http://localhost:5000/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
 
       console.log(response);
       setLoginError(false);

@@ -141,7 +141,7 @@ function CameraCapture() {
       if (response.ok) {
         const jsonResponse = await response.json();
         console.log("File uploaded successfully", jsonResponse);
-        setFilePath(jsonResponse.file_path); 
+        setFilePath(jsonResponse.file_path);
         setPictureCaptured(true);
         openModal();
       } else {

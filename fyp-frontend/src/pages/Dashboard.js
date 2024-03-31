@@ -106,6 +106,7 @@ const Dashboard = () => {
         params: {
           selectedDate: selectedDate,
         },
+        withCredentials: true, // Include session ID in request
       });
 
       setInfo(response.data);
