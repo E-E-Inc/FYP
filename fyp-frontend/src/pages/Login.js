@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Grid } from "@mui/material";
@@ -14,6 +14,24 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [LoginError, setLoginError] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is already logged in
+    const checkLogin = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/login", {
+          withCredentials: true,
+        });
+
+        console.log(response);
+        history.push("/home");
+      } catch (error) {
+        console.error("Not logged in:", error);
+      }
+    };
+
+    checkLogin();
+  }, [history]);
 
   // Function to validate email format
   const validateEmail = (email) => {
