@@ -8,7 +8,7 @@ function Base() {
       <Link to="/SignUp" className="send-button">
         Sign Up
       </Link>
-      <Link to="/Login" className="send-button">
+      <Link to="/login" className="send-button">
         Login
       </Link>
     </div>

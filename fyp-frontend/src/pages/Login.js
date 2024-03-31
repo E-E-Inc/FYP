@@ -15,24 +15,6 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [LoginError, setLoginError] = useState(false);
 
-  useEffect(() => {
-    // Check if the user is already logged in
-    const checkLogin = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/login", {
-          withCredentials: true,
-        });
-
-        console.log(response);
-        history.push("/home");
-      } catch (error) {
-        console.error("Not logged in:", error);
-      }
-    };
-
-    checkLogin();
-  }, [history]);
-
   // Function to validate email format
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
@@ -95,8 +77,6 @@ const Login = () => {
 
   return (
     <div style={{ color: "black" }}>
-      <BackButton />
-
       <form style={{ justifyContent: "flex-start" }}>
         <Grid
           container
