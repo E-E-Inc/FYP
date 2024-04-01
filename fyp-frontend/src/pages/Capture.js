@@ -57,11 +57,16 @@ function CameraCapture() {
   const sendPortionSize = () => {
     setLoading(true);
     axios
-      .post("http://localhost:5000/image_process", {
-        portionSize: portionSize,
-        Calories: Calories,
-        filePath: filePath,
-      })
+      .post(
+        "http://localhost:5000/image_process",
+        {
+          portionSize: portionSize,
+          Calories: Calories,
+          filePath: filePath,
+          foodData: foodData,
+        },
+        { withCredentials: true }
+      )
       .then(function (response) {
         console.log(response);
 
@@ -97,7 +102,7 @@ function CameraCapture() {
       .post("http://localhost:5000/image_process_manually", {
         portion: portion,
         Calories: Calories,
-        foodName: foodName,
+        foodData: foodData,
       })
       .then(function (response) {
         console.log(response);

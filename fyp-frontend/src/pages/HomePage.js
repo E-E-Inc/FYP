@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
 
 const HomePage = () => {
   const history = useHistory();
@@ -19,7 +20,7 @@ const HomePage = () => {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("uid");
         console.log("Logged out");
-        history.push("/");
+        history.push("/base");
       }
     } catch (error) {
       console.error("Error logging out", error);
@@ -28,7 +29,9 @@ const HomePage = () => {
 
   return (
     <div>
-      <button onClick={logout}>Logout</button>
+      <button onClick={logout} className="back-button">
+        <BiArrowBack />
+      </button>
       <Link to="/CapturePicturePage" className="send-button">
         Capture Picture
       </Link>
