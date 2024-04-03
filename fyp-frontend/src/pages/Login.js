@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Grid } from "@mui/material";
-import BackButton from "./backButton";
+import { UserContext } from "./UserContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  const { setUid } = useContext(UserContext);
 
   // State variable for displaying error
   const [noDataError, setNodataError] = useState(false);
@@ -15,6 +15,9 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [LoginError, setLoginError] = useState(false);
 
+  const history = useHistory();
+
+  const [loggedIn, setLoggedIn] = useState(false);
   // Function to validate email format
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
@@ -63,10 +66,17 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      console.log(response);
-      setLoginError(false);
-      // Redirect to the home page or any other route after successful login
-      history.push("/home");
+      if (response.status === 200 && response.data) {
+        setLoginError(false);
+        console.log("Login successful");
+        console.log("Session uid: ", response.data.uid);
+        setUid(response.data.uid);
+        history.replace("/home");
+      } else {
+        // Handle error status here
+        console.error("Login failed with status: ", response.status);
+        setLoginError(true);
+      }
     } catch (error) {
       console.error("Login failed:", error);
       if (!emailError && !passwordError) {

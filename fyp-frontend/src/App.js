@@ -5,8 +5,10 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { UserContext } from "./pages/UserContext";
+import React, { useContext } from "react";
 
 // Import components without curly braces
 import Base from "./pages/BasePage";
@@ -17,47 +19,24 @@ import Dashboard from "./pages/Dashboard";
 import CapturePicturePage from "./pages/CapturePicturePage";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const savedLoginStatus = localStorage.getItem("isLoggedIn");
-    return savedLoginStatus ? JSON.parse(savedLoginStatus) : false;
-  });
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      console.log("Checking login status", isLoggedIn);
-      try {
-        const response = await axios.post("http://localhost:5000/", {
-          withCredentials: true,
-        });
-        console.log("Login response:", response);
-        if (response.status === 200) {
-          setIsLoggedIn(true);
-          localStorage.setItem("isLoggedIn", true);
-          localStorage.setItem("uid", response.data.uid);
-        }
-        console.log("Checking login status", isLoggedIn);
-        console.log("Checking login status", response.data.uid);
-      } catch (error) {
-        setIsLoggedIn(false);
-        localStorage.removeItem("isLoggedIn");
-      }
-    };
-    checkLoginStatus();
-  }, [isLoggedIn]); // Add isLoggedIn as a dependency
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [uid, setUid] = useState(null); // Define uid and setUid here
+  console.log("App.js uid: ", uid);
   return (
     <div className="App">
       <header className="App-header">
-        <Router>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/CapturePicturePage" component={CapturePicturePage} />
-          <Route path="/base" component={Base} />
-          {/* Redirect from root */}
-          <Redirect from="/" to={isLoggedIn ? "/home" : "/base"} />
-        </Router>
+        <UserContext.Provider value={{ uid, setUid }}>
+          <Router>
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/home" component={HomePage} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/CapturePicturePage" component={CapturePicturePage} />
+            <Route path="/base" component={Base} />
+            {/* Redirect from root */}
+            <Redirect from="/" to={isLoggedIn ? "/home" : "/base"} />
+          </Router>
+        </UserContext.Provider>
       </header>
     </div>
   );
