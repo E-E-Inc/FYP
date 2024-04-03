@@ -16,8 +16,6 @@ const Login = () => {
   const [LoginError, setLoginError] = useState(false);
 
   const history = useHistory();
-
-  const [loggedIn, setLoggedIn] = useState(false);
   // Function to validate email format
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;

@@ -99,11 +99,15 @@ function CameraCapture() {
   const sendFoodInfo = () => {
     setLoading(true);
     axios
-      .post("http://localhost:5000/image_process_manually", {
-        portion: portion,
-        Calories: Calories,
-        foodData: foodData,
-      })
+      .post(
+        "http://localhost:5000/image_process_manually",
+        {
+          portion: portion,
+          Calories: Calories,
+          foodName: foodName,
+        },
+        { withCredentials: true }
+      )
       .then(function (response) {
         console.log(response);
 
@@ -113,6 +117,10 @@ function CameraCapture() {
 
         //reset picture captured to false
         setPictureCaptured(false);
+
+        //Clear the manual food entry fields
+        setFoodName("");
+        setPortion("");
 
         //Close User input for calories modal
         closeManualModal();

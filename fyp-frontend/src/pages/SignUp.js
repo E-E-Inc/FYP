@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import BackButton from "./backButton";
 import axios from "axios";
 import { Grid } from "@mui/material";
 import Modal from "react-modal";
 import { Box } from "@mui/material";
+import { UserContext } from "./UserContext";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const { forgetUid } = useContext(UserContext);
 
   // State variable for displaying error for main grid
   const [noDataError, setNodataError] = useState(false);
@@ -96,6 +98,7 @@ const SignUp = () => {
         console.error("Registration failed:", error);
       }
     }
+    forgetUid();
   };
 
   // Method for sending a post request to /update_info to update user information
