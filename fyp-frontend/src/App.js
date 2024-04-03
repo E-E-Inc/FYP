@@ -47,8 +47,6 @@ function App() {
     }
   }, [uid]);
 
-  console.log("App.js uid: ", uid);
-
   return (
     <div className="App">
       <header className="App-header">

@@ -85,7 +85,6 @@ const SignUp = () => {
         email,
         password,
       });
-      console.log(response);
       setModalIsOpen(true);
     } catch (error) {
       if (
@@ -98,6 +97,7 @@ const SignUp = () => {
         console.error("Registration failed:", error);
       }
     }
+    //Resets the uid
     forgetUid();
   };
 

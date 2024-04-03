@@ -16,7 +16,6 @@ const HomePage = () => {
           withCredentials: true,
         }
       );
-      console.log(response); // Debugging line
       if (response.status === 200) {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("uid");

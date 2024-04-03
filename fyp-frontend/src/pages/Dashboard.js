@@ -278,6 +278,7 @@ const Dashboard = () => {
           </Modal>
         </Grid>
       </form>
+      
       <p className="page-label">Total Calories: {total} </p>
       <p className="page-label">
         Recommended Calories Requires: {neededCalories}
