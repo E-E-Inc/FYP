@@ -24,6 +24,7 @@ function CameraCapture() {
   const [filePath, setFilePath] = useState(null);
   const [foodName, setFoodName] = useState(null);
   const [portion, setPortion] = useState(null);
+  const [webcamReady, setWebcamReady] = useState(false);
 
   useEffect(() => {
     console.log("File path is:", filePath);
@@ -215,6 +216,7 @@ function CameraCapture() {
           ref={webcamRef}
           screenshotFormat="image/png"
           className="webcam"
+          onUserMedia={() => setWebcamReady(true)}
         />
       </div>
 
