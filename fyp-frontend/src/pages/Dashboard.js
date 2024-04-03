@@ -46,6 +46,7 @@ const Dashboard = () => {
   useEffect(() => {
     fetchInformation();
     setDifference(neededCalories - total);
+    console.log("Needed >> ", neededCalories);
   }, [selectedDate]);
 
   // Creates a chart for displaying the total calories and needed calories
@@ -125,7 +126,12 @@ const Dashboard = () => {
 
     try {
       // Send a get request to backend
-      const response = await axios.get("http://localhost:5000/needed_calories");
+      const response = await axios.get(
+        "http://localhost:5000/needed_calories",
+        {
+          withCredentials: true,
+        }
+      );
       setNeededCalories(response.data);
     } catch (error) {
       console.error("failed to fetch:", error);
