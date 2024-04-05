@@ -81,10 +81,13 @@ const SignUp = () => {
 
     try {
       // Send a POST request to your backend for sign-up
-      const response = await axios.post("http://localhost:5000/register", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://fyppython-production.up.railway.app:5000/register",
+        {
+          email,
+          password,
+        }
+      );
       setModalIsOpen(true);
     } catch (error) {
       if (
@@ -132,13 +135,16 @@ const SignUp = () => {
 
     try {
       // Send a POST request to your backend for sign-up
-      const response = await axios.post("http://localhost:5000/update_info", {
-        gender,
-        age,
-        email,
-        height,
-        weight,
-      });
+      const response = await axios.post(
+        "https://fyppython-production.up.railway.app:5000/update_info",
+        {
+          gender,
+          age,
+          email,
+          height,
+          weight,
+        }
+      );
       history.push("/login");
       const totalBMR = response.data.total;
       setTotalcalsneeded(totalBMR);

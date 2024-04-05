@@ -103,12 +103,15 @@ const Dashboard = () => {
 
     try {
       // Send a get request to backend
-      const response = await axios.get("http://localhost:5000/information", {
-        params: {
-          selectedDate: selectedDate,
-        },
-        withCredentials: true, // Include session ID in request
-      });
+      const response = await axios.get(
+        "https://fyppython-production.up.railway.app:5000/information",
+        {
+          params: {
+            selectedDate: selectedDate,
+          },
+          withCredentials: true, // Include session ID in request
+        }
+      );
 
       setInfo(response.data);
       totalCalories(response.data);
@@ -127,7 +130,7 @@ const Dashboard = () => {
     try {
       // Send a get request to backend
       const response = await axios.get(
-        "http://localhost:5000/needed_calories",
+        "https://fyppython-production.up.railway.app:5000/needed_calories",
         {
           withCredentials: true,
         }
@@ -156,7 +159,7 @@ const Dashboard = () => {
 
       // Send a get request to backend
       const response = await axios.post(
-        "http://localhost:5000/getNutrition",
+        "https://fyppython-production.up.railway.app:5000/getNutrition",
         data
       );
 
@@ -278,7 +281,6 @@ const Dashboard = () => {
           </Modal>
         </Grid>
       </form>
-      
       <p className="page-label">Total Calories: {total} </p>
       <p className="page-label">
         Recommended Calories Requires: {neededCalories}

@@ -56,7 +56,7 @@ const Login = () => {
     try {
       // Send a POST request to your backend for login
       const response = await axios.post(
-        "http://localhost:5000/login",
+        "https://fyppython-production.up.railway.app:5000/login",
         {
           email,
           password,
