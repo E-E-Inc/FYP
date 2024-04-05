@@ -104,7 +104,7 @@ const Dashboard = () => {
     try {
       // Send a get request to backend
       const response = await axios.get(
-        "https://fyppython-production.up.railway.app:5000/information",
+        "https://fyppython-production.up.railway.app/information",
         {
           params: {
             selectedDate: selectedDate,
@@ -130,7 +130,7 @@ const Dashboard = () => {
     try {
       // Send a get request to backend
       const response = await axios.get(
-        "https://fyppython-production.up.railway.app:5000/needed_calories",
+        "https://fyppython-production.up.railway.app/needed_calories",
         {
           withCredentials: true,
         }
@@ -159,7 +159,7 @@ const Dashboard = () => {
 
       // Send a get request to backend
       const response = await axios.post(
-        "https://fyppython-production.up.railway.app:5000/getNutrition",
+        "https://fyppython-production.up.railway.app/getNutrition",
         data
       );
 

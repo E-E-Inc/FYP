@@ -59,7 +59,7 @@ function CameraCapture() {
     setLoading(true);
     axios
       .post(
-        "https://fyppython-production.up.railway.app:5000/image_process",
+        "https://fyppython-production.up.railway.app/image_process",
         {
           portionSize: portionSize,
           Calories: Calories,
@@ -101,7 +101,7 @@ function CameraCapture() {
     setLoading(true);
     axios
       .post(
-        "https://fyppython-production.up.railway.app:5000/image_process_manually",
+        "https://fyppython-production.up.railway.app/image_process_manually",
         {
           portion: portion,
           Calories: Calories,
@@ -148,7 +148,7 @@ function CameraCapture() {
 
     try {
       const response = await fetch(
-        "https://fyppython-production.up.railway.app:5000/image_upload",
+        "https://fyppython-production.up.railway.app/image_upload",
         {
           method: "POST",
           body: formData,

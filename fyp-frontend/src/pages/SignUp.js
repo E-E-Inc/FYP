@@ -82,7 +82,7 @@ const SignUp = () => {
     try {
       // Send a POST request to your backend for sign-up
       const response = await axios.post(
-        "https://fyppython-production.up.railway.app:5000/register",
+        "https://fyppython-production.up.railway.app/register",
         {
           email,
           password,
@@ -136,7 +136,7 @@ const SignUp = () => {
     try {
       // Send a POST request to your backend for sign-up
       const response = await axios.post(
-        "https://fyppython-production.up.railway.app:5000/update_info",
+        "https://fyppython-production.up.railway.app/update_info",
         {
           gender,
           age,

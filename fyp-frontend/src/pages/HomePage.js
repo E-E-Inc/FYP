@@ -10,7 +10,7 @@ const HomePage = () => {
   const logout = async () => {
     try {
       const response = await axios.post(
-        "https://fyppython-production.up.railway.app:5000/logout",
+        "https://fyppython-production.up.railway.app/logout",
         {},
         {
           withCredentials: true,
