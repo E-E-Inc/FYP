@@ -93,7 +93,7 @@ const Dashboard = () => {
         },
       },
     });
-  }, [neededCalories, total]);
+  }, [fetchInformation, neededCalories, total]);
 
   // makes a get request to /information with selectedDate as a param
   const fetchInformation = async () => {
