@@ -112,7 +112,7 @@ function CameraCapture() {
       .then(function (response) {
         if (response.status === 200 && response.data) {
           console.log("Sent successfully");
-          console.log("Session uid: ", response.data.uid);
+          console.log("Session uid: ", response.data);
         } else {
           // Handle error status here
           console.error("failed with status: ", response.status);
