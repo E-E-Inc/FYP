@@ -116,7 +116,6 @@ function CameraCapture() {
         } else {
           // Handle error status here
           console.error("failed with status: ", response.status);
-          setLoginError(true);
         }
         // Sets the food data and overall calories
         setFoodData(response.data.result);
