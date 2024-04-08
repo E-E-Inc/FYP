@@ -110,8 +110,14 @@ function CameraCapture() {
         { withCredentials: true }
       )
       .then(function (response) {
-        console.log(response);
-
+        if (response.status === 200 && response.data) {
+          console.log("Sent successfully");
+          console.log("Session uid: ", response.data.uid);
+        } else {
+          // Handle error status here
+          console.error("failed with status: ", response.status);
+          setLoginError(true);
+        }
         // Sets the food data and overall calories
         setFoodData(response.data.result);
         setCalories(response.data.calories);
