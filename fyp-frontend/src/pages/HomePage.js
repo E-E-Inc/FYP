@@ -31,6 +31,7 @@ const HomePage = () => {
 
   return (
     console.log("Rendering HomePage"),
+    (
       <div>
         <button onClick={logout} className="back-button">
           <BiArrowBack />
