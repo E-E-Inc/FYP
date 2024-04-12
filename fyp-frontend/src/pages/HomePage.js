@@ -31,9 +31,6 @@ const HomePage = () => {
 
   return (
     console.log("Rendering HomePage"),
-    console.log(
-      "UID is: ",
-      localStorage.getItem("uid"),
       <div>
         <button onClick={logout} className="back-button">
           <BiArrowBack />
