@@ -55,7 +55,7 @@ const Login = () => {
 
     try {
       // Send a POST request to your backend for login
-      fetch("https://fyppython-production.up.railway.app/login", {
+      fetch("http://127.0.0.1:5000/login", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({
