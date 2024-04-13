@@ -55,22 +55,19 @@ const Login = () => {
 
     try {
       // Send a POST request to your backend for login
-      fetch("http://127.0.0.1:5000/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        "https://fyppython-production.up.railway.app/login",
+        {
           email,
           password,
-        }),
-      });
-
-      const data = await response.json();
+        },
+        { withCredentials: true }
+      );
 
       if (response.status === 200 && response.data) {
         setLoginError(false);
+        console.log("Login successful");
+        console.log("Session uid: ", response.data.uid);
         setUid(response.data.uid);
         history.replace("/home");
       } else {
