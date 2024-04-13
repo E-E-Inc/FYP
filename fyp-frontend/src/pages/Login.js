@@ -55,14 +55,14 @@ const Login = () => {
 
     try {
       // Send a POST request to your backend for login
-      const response = await axios.post(
-        "https://fyppython-production.up.railway.app/login",
-        {
+      fetch("https://fyppython-production.up.railway.app/login", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({
           email,
           password,
-        },
-        { withCredentials: true }
-      );
+        }),
+      });
 
       if (response.status === 200 && response.data) {
         setLoginError(false);
