@@ -66,8 +66,6 @@ const Login = () => {
 
       if (response.status === 200 && response.data) {
         setLoginError(false);
-        console.log("Login successful");
-        console.log("Session uid: ", response.data.uid);
         setUid(response.data.uid);
         history.replace("/home");
       } else {
