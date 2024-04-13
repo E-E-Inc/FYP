@@ -67,6 +67,8 @@ const Login = () => {
         }),
       });
 
+      const data = await response.json();
+
       if (response.status === 200 && response.data) {
         setLoginError(false);
         setUid(response.data.uid);
