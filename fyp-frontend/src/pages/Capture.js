@@ -99,8 +99,7 @@ function CameraCapture() {
   // Method for sending a post request to /image_process_manually to process the food inputted by the user
   const sendFoodInfo = () => {
     setLoading(true);
-    axios
-      .post(
+    const response = axios.post(
         "https://fyppython-production.up.railway.app/image_process_manually",
         {
           portion: portion,
@@ -108,8 +107,8 @@ function CameraCapture() {
           foodName: foodName,
         },
         { withCredentials: true }
-      )
-      .then(function (response) {
+      );
+  
         if (response.status === 200 && response.data) {
           console.log("Sent successfully");
           console.log("Response data: ", response.data);
@@ -132,13 +131,7 @@ function CameraCapture() {
         closeManualModal();
         //Open modal for displaying calories
         CalsopenModal();
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      
   };
 
   // Method for closing modal
