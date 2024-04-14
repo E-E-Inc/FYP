@@ -42,6 +42,34 @@ const Dashboard = () => {
     new Date().toISOString().substr(0, 10)
   );
 
+  // makes a get request to /information with selectedDate as a param
+  const fetchInformation = async () => {
+    setDifference(0);
+    setResults(false);
+    setTotal(0);
+
+    try {
+      // Send a get request to backend
+      const response = await axios.get(
+        "https://fyppython-production.up.railway.app/information",
+        {
+          params: {
+            selectedDate: selectedDate,
+          },
+          withCredentials: true, // Include session ID in request
+        }
+      );
+
+      setInfo(response.data);
+      totalCalories(response.data);
+      fetchNeededCalories();
+    } catch (error) {
+      console.error("failed to fetch:", error);
+      setInfo([]);
+      setResults(true);
+    }
+  };
+
   // Sets the value of date when the page opens
   useEffect(() => {
     fetchInformation();
@@ -94,34 +122,6 @@ const Dashboard = () => {
       },
     });
   }, [fetchInformation, neededCalories, total]);
-
-  // makes a get request to /information with selectedDate as a param
-  const fetchInformation = async () => {
-    setDifference(0);
-    setResults(false);
-    setTotal(0);
-
-    try {
-      // Send a get request to backend
-      const response = await axios.get(
-        "https://fyppython-production.up.railway.app/information",
-        {
-          params: {
-            selectedDate: selectedDate,
-          },
-          withCredentials: true, // Include session ID in request
-        }
-      );
-
-      setInfo(response.data);
-      totalCalories(response.data);
-      fetchNeededCalories();
-    } catch (error) {
-      console.error("failed to fetch:", error);
-      setInfo([]);
-      setResults(true);
-    }
-  };
 
   // makes a get request to /needed_calories
   const fetchNeededCalories = async () => {
