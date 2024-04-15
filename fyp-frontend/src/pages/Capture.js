@@ -110,9 +110,7 @@ function CameraCapture() {
     );
     // Assuming 'response' is the object you're trying to access 'result' from
     if (response && response.data) {
-      // Access 'result' property
-      const result = response.result;
-      console.log("Result is: ", result);
+      console.log("Response is: ", response.data);
     } else {
       console.error("Response or result is undefined");
     }
