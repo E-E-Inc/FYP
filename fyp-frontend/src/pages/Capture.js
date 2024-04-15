@@ -53,7 +53,6 @@ function CameraCapture() {
     }
     return new Blob([ab], { type: mimeString });
   }
-
   // Method for sending a post request to /image_process to process the photo taken by the user
   const sendPortionSize = () => {
     setLoading(true);
@@ -71,21 +70,26 @@ function CameraCapture() {
       .then(function (response) {
         console.log(response);
 
-        // Sets the food data and overall calories
-        setFoodData(response.data.result);
-        setCalories(response.data.calories);
+        // Check if response.data is defined
+        if (response.data) {
+          // Sets the food data and overall calories
+          setFoodData(response.data.result);
+          setCalories(response.data.calories);
 
-        //reset picture captured to false
-        setPictureCaptured(false);
+          //reset picture captured to false
+          setPictureCaptured(false);
 
-        console.log(Calories);
-        //Close User input for calories modal
-        closeModal();
-        // If no food data is returned, open the manual food entry modal
-        if (!response.data.result) {
-          openManualModal();
+          console.log(Calories);
+          //Close User input for calories modal
+          closeModal();
+          // If no food data is returned, open the manual food entry modal
+          if (!response.data.result) {
+            openManualModal();
+          } else {
+            CalsopenModal();
+          }
         } else {
-          CalsopenModal();
+          console.log("No data in response");
         }
       })
       .catch(function (error) {
