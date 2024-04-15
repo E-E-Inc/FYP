@@ -97,38 +97,42 @@ function CameraCapture() {
   };
 
   // Method for sending a post request to /image_process_manually to process the food inputted by the user
-  const sendFoodInfo = () => {
-    setLoading(true);
-    const response = axios.post(
-      "https://fyppython-production.up.railway.app/image_process_manually",
-      {
-        portion: portion,
-        Calories: Calories,
-        foodName: foodName,
-      },
-      { withCredentials: true }
-    );
-    // Assuming 'response' is the object you're trying to access 'result' from
-    if (response && response.data) {
-      console.log("Response is: ", response.data);
-    } else {
-      console.error("Response or result is undefined");
+  const sendFoodInfo = async () => {
+    try {
+      setLoading(true);
+      const response = axios.post(
+        "https://fyppython-production.up.railway.app/image_process_manually",
+        {
+          portion: portion,
+          Calories: Calories,
+          foodName: foodName,
+        },
+        { withCredentials: true }
+      );
+      // Assuming 'response' is the object you're trying to access 'result' from
+      if (response && response.data) {
+        console.log("Response is: ", response.data);
+        // Sets the food data and overall calories
+        setFoodData(response.data.result);
+        setCalories(response.data.calories);
+      } else {
+        console.error("Response or result is undefined");
+      }
+
+      //reset picture captured to false
+      setPictureCaptured(false);
+
+      //Clear the manual food entry fields
+      setFoodName("");
+      setPortion("");
+
+      //Close User input for calories modal
+      closeManualModal();
+      //Open modal for displaying calories
+      CalsopenModal();
+    } catch (error) {
+      console.error("An error occurred:", error);
     }
-    // Sets the food data and overall calories
-    setFoodData(response.data.result);
-    setCalories(response.data.calories);
-
-    //reset picture captured to false
-    setPictureCaptured(false);
-
-    //Clear the manual food entry fields
-    setFoodName("");
-    setPortion("");
-
-    //Close User input for calories modal
-    closeManualModal();
-    //Open modal for displaying calories
-    CalsopenModal();
   };
 
   // Method for closing modal
