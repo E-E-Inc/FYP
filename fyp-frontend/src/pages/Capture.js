@@ -100,38 +100,37 @@ function CameraCapture() {
   const sendFoodInfo = () => {
     setLoading(true);
     const response = axios.post(
-        "https://fyppython-production.up.railway.app/image_process_manually",
-        {
-          portion: portion,
-          Calories: Calories,
-          foodName: foodName,
-        },
-        { withCredentials: true }
-      );
-  
-        if (response.status === 200 && response.data) {
-          console.log("Sent successfully");
-          console.log("Response data: ", response.data);
-        } else {
-          // Handle error status here
-          console.error("failed with status: ", response.status);
-        }
-        // Sets the food data and overall calories
-        setFoodData(response.data.result);
-        setCalories(response.data.calories);
+      "https://fyppython-production.up.railway.app/image_process_manually",
+      {
+        portion: portion,
+        Calories: Calories,
+        foodName: foodName,
+      },
+      { withCredentials: true }
+    );
+    // Assuming 'response' is the object you're trying to access 'result' from
+    if (response && response.data) {
+      // Access 'result' property
+      const result = response.result;
+      console.log("Result is: ", result);
+    } else {
+      console.error("Response or result is undefined");
+    }
+    // Sets the food data and overall calories
+    setFoodData(response.data.result);
+    setCalories(response.data.calories);
 
-        //reset picture captured to false
-        setPictureCaptured(false);
+    //reset picture captured to false
+    setPictureCaptured(false);
 
-        //Clear the manual food entry fields
-        setFoodName("");
-        setPortion("");
+    //Clear the manual food entry fields
+    setFoodName("");
+    setPortion("");
 
-        //Close User input for calories modal
-        closeManualModal();
-        //Open modal for displaying calories
-        CalsopenModal();
-      
+    //Close User input for calories modal
+    closeManualModal();
+    //Open modal for displaying calories
+    CalsopenModal();
   };
 
   // Method for closing modal
