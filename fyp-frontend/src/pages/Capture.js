@@ -102,9 +102,10 @@ function CameraCapture() {
 
   // Method for sending a post request to /image_process_manually to process the food inputted by the user
   const sendFoodInfo = async () => {
-    console.log("in sendFoodInfo")
-    try {s
-      console.log("Sending food info");	
+    console.log("in sendFoodInfo");
+    try {
+      s;
+      console.log("Sending food info");
       setLoading(true);
       const response = axios.post(
         "https://fyppython-production.up.railway.app/image_process_manually",
@@ -117,7 +118,10 @@ function CameraCapture() {
       );
       // Assuming 'response' is the object you're trying to access 'result' from
       if (response && response.data) {
-        console.log("Response is: ", response.data);
+        console.log(response); // Check if response is defined
+        console.log(response.data); // Check if response.data is defined
+        console.log(response.data.calories); // Check if response.data.calories is defined
+        setCalories(response.data.calories);
         // Sets the food data and overall calories
         setFoodData(response.data.result);
         setCalories(response.data.calories);
