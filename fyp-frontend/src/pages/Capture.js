@@ -25,6 +25,7 @@ function CameraCapture() {
   const [foodName, setFoodName] = useState(null);
   const [portion, setPortion] = useState(null);
   const [webcamReady, setWebcamReady] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     console.log("File path is:", filePath);
@@ -114,7 +115,22 @@ function CameraCapture() {
         { withCredentials: true }
       )
       .then(function (response) {
+        if (!foodName.trim()) {
+          setError("Food name is required");
+          return;
+        }
+
+        if (!portion || portion <= 0) {
+          setError("Portion size must be more than 0");
+          return;
+        }
+
         console.log(response);
+
+        if (!data.found) {
+          setError("Not found");
+          return;
+        }
 
         // Sets the food data and overall calories
         setFoodData(response.data.result);
@@ -374,6 +390,7 @@ function CameraCapture() {
             >
               Add Food
             </button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
           </div>
         )}
       </Modal>
