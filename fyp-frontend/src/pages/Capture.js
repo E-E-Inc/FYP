@@ -102,7 +102,9 @@ function CameraCapture() {
 
   // Method for sending a post request to /image_process_manually to process the food inputted by the user
   const sendFoodInfo = async () => {
-    try {
+    console.log("in sendFoodInfo")
+    try {s
+      console.log("Sending food info");	
       setLoading(true);
       const response = axios.post(
         "https://fyppython-production.up.railway.app/image_process_manually",
