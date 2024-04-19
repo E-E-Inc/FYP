@@ -245,10 +245,10 @@ function CameraCapture() {
 
   // Method for opening modal for displaying calories
   const CalsopenModal = () => {
-    if (foodData && Calories) {
-      setCalsModalIsOpen(true); // Open the modal only if both foodData and Calories are available
+    if (!foodData && !Calories) {
+       setResultModalIsOpen(true); 
     } else {
-      setResultModalIsOpen(true); // Open the no result modal if either foodData or Calories are not available
+       setCalsModalIsOpen(true);
     }
   };
 
