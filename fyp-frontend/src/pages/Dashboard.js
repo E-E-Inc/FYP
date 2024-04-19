@@ -109,7 +109,7 @@ const Dashboard = () => {
       },
       options: {
         scales: {
-          yAxes: [
+          y: [
             {
               type: "linear",
               beginAtZero: true,
@@ -126,9 +126,12 @@ const Dashboard = () => {
 
     try {
       // Send a get request to backend
-      const response = await axios.get("http://localhost:5000/needed_calories", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "http://localhost:5000/needed_calories",
+        {
+          withCredentials: true,
+        }
+      );
       setNeededCalories(response.data);
     } catch (error) {
       console.error("failed to fetch:", error);
