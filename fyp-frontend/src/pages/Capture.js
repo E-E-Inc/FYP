@@ -246,9 +246,11 @@ function CameraCapture() {
   // Method for opening modal for displaying calories
   const CalsopenModal = () => {
     if (!foodData && !Calories) {
-       setResultModalIsOpen(true); 
+      setResultModalIsOpen(true);
+    } else if (foodData && Calories) {
+      setCalsModalIsOpen(true);
     } else {
-       setCalsModalIsOpen(true);
+      console.log("No data to display");
     }
   };
 
