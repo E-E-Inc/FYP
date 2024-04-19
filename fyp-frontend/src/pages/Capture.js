@@ -101,51 +101,36 @@ function CameraCapture() {
   };
 
   // Method for sending a post request to /image_process_manually to process the food inputted by the user
-  const sendFoodInfo = async () => {
-    console.log("in sendFoodInfo");
-    try {
-      console.log("Sending food info");
-      setLoading(true);
-      const response = axios.post(
-        "http://localhost:5000/image_process_manually",
-        {
-          portion: portion,
-          Calories: Calories,
-          foodName: foodName,
-        },
-        { withCredentials: true }
-      );
+  const sendFoodInfo = () => {
+    setLoading(true);
+    axios
+      .post("http://localhost:5000/image_process_manually", {
+        portion: portion,
+        Calories: Calories,
+        foodName: foodName,
+      })
+      .then(function (response) {
+        console.log(response);
 
-
-      console.log(response.data);
-
-      // Assuming 'response' is the object you're trying to access 'result' from
-      if (response && response.data) {
-        // console.log(response); // Check if response is defined
-        //console.log(response.data); // Check if response.data is defined
-        //console.log(response.data.calories); // Check if response.data.calories is defined
-        //setCalories(response.data.calories);
         // Sets the food data and overall calories
-        //setFoodData(response.data.result);
-        //setCalories(response.data.calories);
-      } else {
-        console.error("Response or result is undefined");
-      }
+        setFoodData(response.data.result);
+        setCalories(response.data.calories);
 
-      //reset picture captured to false
-      setPictureCaptured(false);
+        //reset picture captured to false
+        setPictureCaptured(false);
 
-      //Clear the manual food entry fields
-      setFoodName("");
-      setPortion("");
-
-      //Close User input for calories modal
-      closeManualModal();
-      //Open modal for displaying calories
-      CalsopenModal();
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
+        console.log(Calories);
+        //Close User input for calories modal
+        closeManualModal();
+        //Open modal for displaying calories
+        CalsopenModal();
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false regardless of success or failure
+      });
   };
 
   // Method for closing modal
