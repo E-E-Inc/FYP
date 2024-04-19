@@ -115,9 +115,12 @@ function CameraCapture() {
         },
         { withCredentials: true }
       );
-console.log(response.data);
+
+      console.log(response);
 
       console.log(response.data);
+
+      console.log((await response).status);
 
       // Assuming 'response' is the object you're trying to access 'result' from
       if (response && response.data) {
