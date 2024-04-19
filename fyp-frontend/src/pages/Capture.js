@@ -115,18 +115,19 @@ function CameraCapture() {
         },
         { withCredentials: true }
       );
+console.log(response.data);
 
-      console.log(response);
+      console.log(response.data);
 
       // Assuming 'response' is the object you're trying to access 'result' from
       if (response && response.data) {
-       // console.log(response); // Check if response is defined
-        console.log(response.data); // Check if response.data is defined
-        console.log(response.data.calories); // Check if response.data.calories is defined
+        // console.log(response); // Check if response is defined
+        //console.log(response.data); // Check if response.data is defined
+        //console.log(response.data.calories); // Check if response.data.calories is defined
         //setCalories(response.data.calories);
         // Sets the food data and overall calories
-        setFoodData(response.data.result);
-        setCalories(response.data.calories);
+        //setFoodData(response.data.result);
+        //setCalories(response.data.calories);
       } else {
         console.error("Response or result is undefined");
       }
