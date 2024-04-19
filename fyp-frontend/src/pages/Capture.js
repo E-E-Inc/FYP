@@ -18,6 +18,7 @@ function CameraCapture() {
   const [portionSize, setPortionSize] = useState(1);
   const [manualModalIsOpen, setManualModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [resultModalIsOpen, setResultModalIsOpen] = useState(false);
   const [CalsmodalIsOpen, setCalsModalIsOpen] = useState(false);
   const [foodData, setFoodData] = useState(null);
   const [Calories, setCalories] = useState(null);
@@ -167,6 +168,7 @@ function CameraCapture() {
         setPictureCaptured(false);
 
         console.log(Calories);
+        console.log(foodData);
         //Close User input for calories modal
         closeManualModal();
         //Open modal for displaying calories
@@ -174,6 +176,7 @@ function CameraCapture() {
       })
       .catch(function (error) {
         console.log(error);
+        openNoResultModal();
       })
       .finally(() => {
         setLoading(false); // Set loading to false regardless of success or failure
@@ -231,13 +234,22 @@ function CameraCapture() {
     setModalIsOpen(false);
   };
 
+  // Method for opening modal for user input
+  const openNoResultModal = () => {
+    setResultModalIsOpen(true);
+  };
+
+  // Method for closing modal for user input
+  const closeNoResultModal = () => {
+    setResultModalIsOpen(false);
+  };
+
   // Method for opening modal for displaying calories
   const CalsopenModal = () => {
     if (foodData && Calories) {
       setCalsModalIsOpen(true); // Open the modal only if both foodData and Calories are available
     } else {
-      // Display a message or notification to the user
-      alert("No nutritional information available for this food.");
+      setResultModalIsOpen(true); // Open the no result modal if either foodData or Calories are not available
     }
   };
 
@@ -444,6 +456,10 @@ function CameraCapture() {
             </Grid>
           </div>
         )}
+      </Modal>
+
+      <Modal isOpen={manualModalIsOpen} onRequestClose={closeManualModal}>
+        No nutritional information available for this food.
       </Modal>
     </div>
   );
