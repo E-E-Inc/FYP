@@ -108,6 +108,7 @@ function CameraCapture() {
         portion: portion,
         Calories: Calories,
         foodName: foodName,
+        uid: uid,
       })
       .then(function (response) {
         console.log(response);
