@@ -109,7 +109,7 @@ const Dashboard = () => {
       },
       options: {
         scales: {
-          y: [
+          yAxes: [
             {
               type: "linear",
               beginAtZero: true,
