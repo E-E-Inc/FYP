@@ -50,7 +50,7 @@ const Dashboard = () => {
 
     try {
       // Send a get request to backend
-      const response = await axios.get("ttp://localhost:5000/information", {
+      const response = await axios.get("http://localhost:5000/information", {
         params: {
           selectedDate: selectedDate,
         },
