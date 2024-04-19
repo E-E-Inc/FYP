@@ -25,7 +25,10 @@ function CameraCapture() {
   const [foodName, setFoodName] = useState(null);
   const [portion, setPortion] = useState(null);
   const [webcamReady, setWebcamReady] = useState(false);
-  const [error, setError] = useState("");
+
+  const [noInfoError, setNoInfoError] = useState(false);
+  const [foodNameError, setFoodNameError] = useState(false);
+  const [portionError, setPortionError] = useState(false);
 
   useEffect(() => {
     console.log("File path is:", filePath);
@@ -101,8 +104,48 @@ function CameraCapture() {
       });
   };
 
+  // Validation logic
+  const validateFields = () => {
+    let isValid = true;
+
+    // Validate food name
+    if (!foodName) {
+      setFoodNameError(true);
+      isValid = false;
+    } else {
+      setFoodNameError(false);
+    }
+
+    // Validate portion
+    if (!portion || isNaN(portion) || portion <= 0) {
+      setPortionError(true);
+      isValid = false;
+    } else {
+      setPortionError(false);
+    }
+
+    // Validate portion
+    if (!portion || !foodName) {
+      setNoInfoError(true);
+      isValid = false;
+    } else {
+      setNoInfoError(false);
+    }
+
+    return isValid;
+  };
+
   // Method for sending a post request to /image_process_manually to process the food inputted by the user
   const sendFoodInfo = () => {
+    setNoInfoError(false);
+    setFoodNameError(false);
+    setPortionError(false);
+
+    // Validate fields
+    if (!validateFields()) {
+      return;
+    }
+
     setLoading(true);
     axios
       .post(
@@ -115,23 +158,6 @@ function CameraCapture() {
         { withCredentials: true }
       )
       .then(function (response) {
-        if (!foodName.trim()) {
-          setError("Food name is required");
-          return;
-        }
-
-        if (!portion || portion <= 0) {
-          setError("Portion size must be more than 0");
-          return;
-        }
-
-        console.log(response);
-
-        if (!response.data.found) {
-          setError("Not found");
-          return;
-        }
-
         // Sets the food data and overall calories
         setFoodData(response.data.result);
         setCalories(response.data.calories);
@@ -374,6 +400,12 @@ function CameraCapture() {
               className="food-input"
               style={{ marginBottom: "10px" }}
             />
+            <Grid item xs={12}>
+              {foodNameError && (
+                <label className="error-label">Please enter a Food</label>
+              )}
+            </Grid>
+
             <h2>Enter Portion Size</h2>
             <input
               type="number"
@@ -383,6 +415,13 @@ function CameraCapture() {
               className="food-input"
               style={{ marginBottom: "10px" }}
             />
+            <Grid item xs={12}>
+              {portionError && (
+                <label className="error-label">
+                  Please enter a valid portion size
+                </label>
+              )}
+            </Grid>
             <button
               onClick={sendFoodInfo}
               className="send-button"
@@ -390,7 +429,13 @@ function CameraCapture() {
             >
               Add Food
             </button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            <Grid item xs={12}>
+              {noInfoError && (
+                <label className="error-label">
+                  Please enter both a Food name and portion size
+                </label>
+              )}
+            </Grid>
           </div>
         )}
       </Modal>
