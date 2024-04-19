@@ -104,7 +104,6 @@ function CameraCapture() {
   const sendFoodInfo = async () => {
     console.log("in sendFoodInfo");
     try {
-      s;
       console.log("Sending food info");
       setLoading(true);
       const response = axios.post(
