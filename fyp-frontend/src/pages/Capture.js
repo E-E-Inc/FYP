@@ -104,12 +104,15 @@ function CameraCapture() {
   const sendFoodInfo = () => {
     setLoading(true);
     axios
-      .post("http://localhost:5000/image_process_manually", {
-        portion: portion,
-        Calories: Calories,
-        foodName: foodName,
-        uid: uid,
-      })
+      .post(
+        "http://localhost:5000/image_process_manually",
+        {
+          portion: portion,
+          Calories: Calories,
+          foodName: foodName,
+        },
+        { withCredentials: true }
+      )
       .then(function (response) {
         console.log(response);
 
