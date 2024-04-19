@@ -120,7 +120,7 @@ function CameraCapture() {
 
       // Assuming 'response' is the object you're trying to access 'result' from
       if (response && response.data) {
-        console.log(response); // Check if response is defined
+       // console.log(response); // Check if response is defined
         console.log(response.data); // Check if response.data is defined
         console.log(response.data.calories); // Check if response.data.calories is defined
         //setCalories(response.data.calories);
