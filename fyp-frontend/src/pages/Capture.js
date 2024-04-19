@@ -6,6 +6,7 @@ import "./pages.css";
 import BackButton from "./backButton";
 import { BiArrowBack } from "react-icons/bi";
 import FadeLoader from "react-spinners/FadeLoader";
+import { Grid } from "@mui/material";
 
 Modal.setAppElement("#root"); // This line is needed for accessibility reasons
 
