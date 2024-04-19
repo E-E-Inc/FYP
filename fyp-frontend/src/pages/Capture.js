@@ -127,7 +127,7 @@ function CameraCapture() {
 
         console.log(response);
 
-        if (!data.found) {
+        if (!response.data.found) {
           setError("Not found");
           return;
         }
