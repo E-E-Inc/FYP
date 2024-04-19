@@ -115,6 +115,9 @@ function CameraCapture() {
         },
         { withCredentials: true }
       );
+
+      console.log(response);
+      
       // Assuming 'response' is the object you're trying to access 'result' from
       if (response && response.data) {
         console.log(response); // Check if response is defined
