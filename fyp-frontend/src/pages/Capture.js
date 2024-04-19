@@ -120,7 +120,7 @@ function CameraCapture() {
         console.log(response); // Check if response is defined
         console.log(response.data); // Check if response.data is defined
         console.log(response.data.calories); // Check if response.data.calories is defined
-        setCalories(response.data.calories);
+        //setCalories(response.data.calories);
         // Sets the food data and overall calories
         setFoodData(response.data.result);
         setCalories(response.data.calories);
