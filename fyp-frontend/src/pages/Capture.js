@@ -176,7 +176,6 @@ function CameraCapture() {
       })
       .catch(function (error) {
         console.log(error);
-        openNoResultModal();
       })
       .finally(() => {
         setLoading(false); // Set loading to false regardless of success or failure
