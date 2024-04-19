@@ -58,7 +58,7 @@ function CameraCapture() {
     setLoading(true);
     axios
       .post(
-        "https://fyppython-production.up.railway.app/image_process",
+        "http://localhost:5000/image_process",
         {
           portionSize: portionSize,
           Calories: Calories,
@@ -107,7 +107,7 @@ function CameraCapture() {
       console.log("Sending food info");
       setLoading(true);
       const response = axios.post(
-        "https://fyppython-production.up.railway.app/image_process_manually",
+        "http://localhost:5000/image_process_manually",
         {
           portion: portion,
           Calories: Calories,
@@ -117,7 +117,7 @@ function CameraCapture() {
       );
 
       console.log(response);
-      
+
       // Assuming 'response' is the object you're trying to access 'result' from
       if (response && response.data) {
         console.log(response); // Check if response is defined
@@ -158,13 +158,10 @@ function CameraCapture() {
     formData.append("file", blob);
 
     try {
-      const response = await fetch(
-        "https://fyppython-production.up.railway.app/image_upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:5000/image_upload", {
+        method: "POST",
+        body: formData,
+      });
 
       if (response.ok) {
         const jsonResponse = await response.json();
