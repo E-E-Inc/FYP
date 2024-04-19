@@ -457,7 +457,7 @@ function CameraCapture() {
         )}
       </Modal>
 
-      <Modal isOpen={manualModalIsOpen} onRequestClose={closeManualModal}>
+      <Modal isOpen={resultModalIsOpen} onRequestClose={closeNoResultModal}>
         No nutritional information available for this food.
       </Modal>
     </div>
