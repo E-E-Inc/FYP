@@ -191,9 +191,9 @@ function CameraCapture() {
     CalscloseModal();
     setFoodName(" ");
     setPortion(" ");
-    setNoFoodFound(false);
+    setNoFoodFound(true);
 
-    console.log("Food found ", noFoodFound);
+    console.log("Reset Food found ", noFoodFound);
   };
 
   // Method for sending a post request to /image_upload to upload the photo taken by the user
