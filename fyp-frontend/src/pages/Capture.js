@@ -309,7 +309,6 @@ function CameraCapture() {
           <h1 className="my-heading"> Nutritional Information</h1>
           <h2>Food Name: {foodData}</h2>
           <h2>Overall Calories: {Calories}</h2>
-          {noFoodFound && <h2>No food found!</h2>}
         </Modal>
       )}
 
@@ -456,6 +455,7 @@ function CameraCapture() {
                 </label>
               )}
             </Grid>
+            {noFoodFound && <h2>No food found!</h2>}
           </div>
         )}
       </Modal>
