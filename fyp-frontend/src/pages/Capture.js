@@ -169,6 +169,11 @@ function CameraCapture() {
 
           closeManualModal();
           CalsopenModal();
+
+          // Reset foodData state
+          setFoodData(null);
+          setCalories(null);
+          
         } else {
           // If no food data is found
           setCalsModalIsOpen(false);
