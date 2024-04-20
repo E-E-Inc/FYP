@@ -192,7 +192,8 @@ function CameraCapture() {
     setFoodName(" ");
     setPortion(" ");
     setNoFoodFound(false);
-    console.log("Portion Size: ", portion);
+
+    console.log("Food found ", noFoodFound);
   };
 
   // Method for sending a post request to /image_upload to upload the photo taken by the user
