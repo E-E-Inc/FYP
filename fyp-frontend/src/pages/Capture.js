@@ -191,6 +191,7 @@ function CameraCapture() {
     CalscloseModal();
     setFoodName(" ");
     setPortion(" ");
+    setNoFoodFound(true);
     console.log("Portion Size: ", portion);
   };
 
