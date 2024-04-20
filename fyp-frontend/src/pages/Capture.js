@@ -175,6 +175,7 @@ function CameraCapture() {
           console.log("No data in response");
           setNoFoodFound(true);
           console.log("Food Found: ", noFoodFound);
+          openNoResultModal();
         }
       })
       .catch(function (error) {
@@ -307,6 +308,30 @@ function CameraCapture() {
         <h1 className="my-heading"> Nutritional Information</h1>
         <h2>Food Name: {foodData}</h2>
         <h2>Overall Calories: {Calories}</h2>
+      </Modal>
+
+      {/* Display No Result Model */}
+      <Modal
+        isOpen={resultModalIsOpen}
+        onRequestClose={closeNoResultModal}
+        contentLabel="No Food Found"
+        style={{
+          overlay: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            position: "relative",
+            top: "auto",
+            left: "auto",
+            right: "auto",
+            bottom: "auto",
+            borderRadius: "10px",
+          },
+        }}
+      >
+        <h2>No food found!</h2>
       </Modal>
 
       <div style={{ display: "flex", justifyContent: "left", width: "45%" }}>
