@@ -143,10 +143,10 @@ function CameraCapture() {
     setFoodNameError(false);
     setPortionError(false);
 
-    // Validate fields
-    if (!validateFields()) {
-      return;
-    }
+    // // Validate fields
+    // if (!validateFields()) {
+    //   return;
+    // }
 
     setLoading(true);
     axios
