@@ -448,6 +448,7 @@ function CameraCapture() {
             >
               Add Food
             </button>
+            {noFoodFound && <h2>No food found!</h2>}
             <Grid item xs={12}>
               {noInfoError && (
                 <label className="error-label">
@@ -455,7 +456,6 @@ function CameraCapture() {
                 </label>
               )}
             </Grid>
-            {noFoodFound && <h2>No food found!</h2>}
           </div>
         )}
       </Modal>
