@@ -188,10 +188,10 @@ function CameraCapture() {
 
   // Method for closing modal
   const goback = () => {
-    setFoodName(" ");
-    //setCalories(" ");
-    setPortion(" ");
     CalscloseModal();
+    setFoodName(" ");
+    setPortion(" ");
+    console.log("Portion Size: ", portion);
   };
 
   // Method for sending a post request to /image_upload to upload the photo taken by the user
@@ -306,7 +306,6 @@ function CameraCapture() {
           }}
         >
           <button onClick={goback} className="back-button-model">
-            {" "}
             <BiArrowBack />
           </button>
           <h1 className="my-heading"> Nutritional Information</h1>
