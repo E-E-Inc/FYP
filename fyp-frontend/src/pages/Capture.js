@@ -166,6 +166,8 @@ function CameraCapture() {
           // Sets the food data and overall calories
           setFoodData(response.data.result);
           setCalories(response.data.calories);
+
+          closeManualModal();
           CalsopenModal();
         } else {
           // If no food data is found
