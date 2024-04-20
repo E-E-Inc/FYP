@@ -281,34 +281,36 @@ function CameraCapture() {
       </div>
 
       {/* Display Calories Model */}
-      <Modal
-        isOpen={CalsmodalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Portion Size Input"
-        style={{
-          overlay: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          content: {
-            position: "relative",
-            top: "auto",
-            left: "auto",
-            right: "auto",
-            bottom: "auto",
-            borderRadius: "10px",
-          },
-        }}
-      >
-        <button onClick={goback} className="back-button-model">
-          {" "}
-          <BiArrowBack />
-        </button>
-        <h1 className="my-heading"> Nutritional Information</h1>
-        <h2>Food Name: {foodData}</h2>
-        <h2>Overall Calories: {Calories}</h2>
-      </Modal>
+      {foodData && (
+        <Modal
+          isOpen={CalsmodalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Portion Size Input"
+          style={{
+            overlay: {
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            content: {
+              position: "relative",
+              top: "auto",
+              left: "auto",
+              right: "auto",
+              bottom: "auto",
+              borderRadius: "10px",
+            },
+          }}
+        >
+          <button onClick={goback} className="back-button-model">
+            {" "}
+            <BiArrowBack />
+          </button>
+          <h1 className="my-heading"> Nutritional Information</h1>
+          <h2>Food Name: {foodData}</h2>
+          <h2>Overall Calories: {Calories}</h2>
+        </Modal>
+      )}
 
       {/* Display No Result Model */}
       <Modal
