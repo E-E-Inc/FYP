@@ -448,7 +448,11 @@ function CameraCapture() {
             >
               Add Food
             </button>
-            {noFoodFound && <h2>No food found!</h2>}
+            {noFoodFound && (
+              <label className="error-label">
+                No food found! Please try again{" "}
+              </label>
+            )}
             <Grid item xs={12}>
               {noInfoError && (
                 <label className="error-label">
