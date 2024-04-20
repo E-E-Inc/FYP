@@ -31,7 +31,7 @@ function CameraCapture() {
   const [noInfoError, setNoInfoError] = useState(false);
   const [foodNameError, setFoodNameError] = useState(false);
   const [portionError, setPortionError] = useState(false);
-
+  const [noFoodFound, setNoFoodFound] = useState(false);
   useEffect(() => {
     console.log("File path is:", filePath);
   }, [filePath]);
@@ -173,6 +173,8 @@ function CameraCapture() {
           // If no food data is found
           //openNoResultModal();
           console.log("No data in response");
+          setNoFoodFound(true);
+          console.log("Food Found: ", noFoodFound);
         }
       })
       .catch(function (error) {
