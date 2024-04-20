@@ -160,19 +160,16 @@ function CameraCapture() {
         { withCredentials: true }
       )
       .then(function (response) {
-        // Sets the food data and overall calories
-        setFoodData(response.data.result);
-        setCalories(response.data.calories);
-
-        //reset picture captured to false
-        setPictureCaptured(false);
-
-        console.log(Calories);
-        console.log(foodData);
-        //Close User input for calories modal
-        closeManualModal();
-        //Open modal for displaying calories
-        CalsopenModal();
+        // If food data is found
+        if (response.data && response.data.result) {
+          // Sets the food data and overall calories
+          setFoodData(response.data.result);
+          setCalories(response.data.calories);
+          CalsopenModal();
+        } else {
+          // If no food data is found
+          openNoResultModal();
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -245,13 +242,7 @@ function CameraCapture() {
 
   // Method for opening modal for displaying calories
   const CalsopenModal = () => {
-    if (!foodData && !Calories) {
-      setResultModalIsOpen(true);
-    } else if (foodData && Calories) {
-      setCalsModalIsOpen(true);
-    } else {
-      console.log("No data to display");
-    }
+    setCalsModalIsOpen(true);
   };
 
   // Method for closing modal for displaying calories
@@ -308,8 +299,17 @@ function CameraCapture() {
           <BiArrowBack />
         </button>
         <h1 className="my-heading"> Nutritional Information</h1>
-        <h2>Food Name: {foodData}</h2>
-        <h2>Overall Calories: {Calories}</h2>
+
+        {/* Conditionally render food information if available */}
+        {foodData && Calories ? (
+          <>
+            <h2>Food Name: {foodData}</h2>
+            <h2>Overall Calories: {Calories}</h2>
+          </>
+        ) : (
+          // If food data is not available, display a message
+          <h2>No nutritional information available</h2>
+        )}
       </Modal>
 
       <div style={{ display: "flex", justifyContent: "left", width: "45%" }}>
@@ -457,10 +457,6 @@ function CameraCapture() {
             </Grid>
           </div>
         )}
-      </Modal>
-
-      <Modal isOpen={resultModalIsOpen} onRequestClose={closeNoResultModal}>
-        No nutritional information available for this food.
       </Modal>
     </div>
   );
