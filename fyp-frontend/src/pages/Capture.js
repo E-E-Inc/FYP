@@ -171,8 +171,7 @@ function CameraCapture() {
           CalsopenModal();
         } else {
           // If no food data is found
-          //openNoResultModal();
-          closeManualModal();
+          setCalsModalIsOpen(false);
           console.log("No data in response");
           setNoFoodFound(true);
           console.log("Food Found: ", noFoodFound);
