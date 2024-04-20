@@ -190,7 +190,7 @@ function CameraCapture() {
   const goback = () => {
     setFoodName(" ");
     //setCalories(" ");
-    setPortionSize(" ");
+    setPortion(" ");
     CalscloseModal();
   };
 
