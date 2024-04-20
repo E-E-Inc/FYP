@@ -169,9 +169,6 @@ function CameraCapture() {
 
           closeManualModal();
           CalsopenModal();
-          // Reset foodData state
-          setFoodName("");
-          setCalories("");
         } else {
           // If no food data is found
           setCalsModalIsOpen(false);
@@ -192,6 +189,8 @@ function CameraCapture() {
   // Method for closing modal
   const goback = () => {
     CalscloseModal();
+    setFoodName("");
+    setCalories("");
   };
 
   // Method for sending a post request to /image_upload to upload the photo taken by the user
