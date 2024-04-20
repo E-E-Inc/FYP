@@ -160,6 +160,7 @@ function CameraCapture() {
         { withCredentials: true }
       )
       .then(function (response) {
+        console.log(response);
         // If food data is found
         if (response.data && response.data.result) {
           // Sets the food data and overall calories
