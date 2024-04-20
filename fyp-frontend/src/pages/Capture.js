@@ -168,8 +168,8 @@ function CameraCapture() {
           setCalories(response.data.calories);
 
           // Reset foodData state
-          setFoodData(null);
-          setCalories(null);
+          setFoodName("");
+          setCalories("");
 
           closeManualModal();
           CalsopenModal();
