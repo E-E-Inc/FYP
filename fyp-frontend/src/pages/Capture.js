@@ -165,6 +165,8 @@ function CameraCapture() {
           // Sets the food data and overall calories
           setFoodData(response.data.result);
           setCalories(response.data.calories);
+          console.log("Food Data", foodData);
+          console.log("Calories", Calories);
           CalsopenModal();
         } else {
           // If no food data is found
@@ -298,6 +300,7 @@ function CameraCapture() {
           {" "}
           <BiArrowBack />
         </button>
+
         <h1 className="my-heading"> Nutritional Information</h1>
 
         {/* Conditionally render food information if available */}
