@@ -168,14 +168,15 @@ function CameraCapture() {
           CalsopenModal();
         } else {
           // If no food data is found
-          openNoResultModal();
+          //openNoResultModal();
+          console.log("No data in response");
         }
       })
       .catch(function (error) {
         console.log(error);
       })
       .finally(() => {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false);
       });
   };
 
@@ -299,7 +300,6 @@ function CameraCapture() {
           <BiArrowBack />
         </button>
         <h1 className="my-heading"> Nutritional Information</h1>
-
         <h2>Food Name: {foodData}</h2>
         <h2>Overall Calories: {Calories}</h2>
       </Modal>
