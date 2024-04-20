@@ -139,6 +139,7 @@ function CameraCapture() {
 
   // Method for sending a post request to /image_process_manually to process the food inputted by the user
   const sendFoodInfo = () => {
+    console.log("In send food info")
     setNoInfoError(false);
     setFoodNameError(false);
     setPortionError(false);
