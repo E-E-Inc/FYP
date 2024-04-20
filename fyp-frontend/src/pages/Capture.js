@@ -139,7 +139,6 @@ function CameraCapture() {
 
   // Method for sending a post request to /image_process_manually to process the food inputted by the user
   const sendFoodInfo = () => {
-    console.log("In send food info")
     setNoInfoError(false);
     setFoodNameError(false);
     setPortionError(false);
@@ -166,8 +165,6 @@ function CameraCapture() {
           // Sets the food data and overall calories
           setFoodData(response.data.result);
           setCalories(response.data.calories);
-          console.log("Food Data", foodData);
-          console.log("Calories", Calories);
           CalsopenModal();
         } else {
           // If no food data is found
@@ -301,19 +298,10 @@ function CameraCapture() {
           {" "}
           <BiArrowBack />
         </button>
-
         <h1 className="my-heading"> Nutritional Information</h1>
 
-        {/* Conditionally render food information if available */}
-        {foodData && Calories ? (
-          <>
-            <h2>Food Name: {foodData}</h2>
-            <h2>Overall Calories: {Calories}</h2>
-          </>
-        ) : (
-          // If food data is not available, display a message
-          <h2>No nutritional information available</h2>
-        )}
+        <h2>Food Name: {foodData}</h2>
+        <h2>Overall Calories: {Calories}</h2>
       </Modal>
 
       <div style={{ display: "flex", justifyContent: "left", width: "45%" }}>
