@@ -34,6 +34,7 @@ function CameraCapture() {
   const [noFoodFound, setNoFoodFound] = useState(false);
   useEffect(() => {
     console.log("File path is:", filePath);
+    setNoFoodFound(false);
   }, [filePath]);
 
   // Method to deal with captured image
