@@ -192,7 +192,7 @@ function CameraCapture() {
     CalscloseModal();
     setFoodName(" ");
     setPortion(" ");
-    setNoFoodFound(true);
+    setNoFoodFound(false);
 
     console.log("Reset Food found ", noFoodFound);
   };
